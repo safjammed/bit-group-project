@@ -1,0 +1,2 @@
+# bit-group-project
+THIS IS THE PROJECT VERSION CONTROL SYSTEM
