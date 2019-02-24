@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','country_code', 'phone'
     ];
 
     /**
@@ -29,4 +29,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * User tokens relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tokens()
+    {
+        return $this->hasMany("App\Token");
+    }
+
+    /**
+     * Return the country code and phone number concatenated
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->country_code.$this->phone;
+    }
+
 }

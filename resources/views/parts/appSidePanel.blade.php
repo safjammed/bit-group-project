@@ -73,7 +73,7 @@
                     <div class="pull-xs-right">
                         <strong>Jonathan Mel</strong>
                         <div class="avatar box-32">
-                            <img src="img/avatars/5.jpg" alt="">
+                            <img src="/img/avatars/5.jpg" alt="">
                             <span class="status bg-success top right"></span>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                         <div class="media">
                             <div class="media-left">
                                 <div class="avatar box-48">
-                                    <img class="b-a-radius-circle" src="img/avatars/1.jpg" alt="">
+                                    <img class="b-a-radius-circle" src="/img/avatars/1.jpg" alt="">
                                     <span class="n-icon bg-danger"><i class="ti-pin-alt"></i></span>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
                         <div class="media">
                             <div class="media-left">
                                 <div class="avatar box-48">
-                                    <img class="b-a-radius-circle" src="img/avatars/3.jpg" alt="">
+                                    <img class="b-a-radius-circle" src="/img/avatars/3.jpg" alt="">
                                     <span class="n-icon bg-success"><i class="ti-comment"></i></span>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
                         <div class="media">
                             <div class="media-left">
                                 <div class="avatar box-48">
-                                    <img class="b-a-radius-circle" src="img/avatars/2.jpg" alt="">
+                                    <img class="b-a-radius-circle" src="/img/avatars/2.jpg" alt="">
                                     <span class="n-icon bg-danger"><i class="ti-email"></i></span>
                                 </div>
                             </div>
@@ -145,13 +145,13 @@
                                 <div class="n-text"><a class="text-black" href="#">Ron Carran</a> <span class="text-muted">send you files</span></div>
                                 <div class="row row-sm m-y-0-5">
                                     <div class="col-xs-4">
-                                        <img class="img-fluid" src="img/photos-1/1.jpg" alt="">
+                                        <img class="img-fluid" src="/img/photos-1/1.jpg" alt="">
                                     </div>
                                     <div class="col-xs-4">
-                                        <img class="img-fluid" src="img/photos-1/2.jpg" alt="">
+                                        <img class="img-fluid" src="/img/photos-1/2.jpg" alt="">
                                     </div>
                                     <div class="col-xs-4">
-                                        <img class="img-fluid" src="img/photos-1/3.jpg" alt="">
+                                        <img class="img-fluid" src="/img/photos-1/3.jpg" alt="">
                                     </div>
                                 </div>
                                 <div class="text-muted font-90">30 minutes ago</div>
@@ -162,7 +162,7 @@
                         <div class="media">
                             <div class="media-left">
                                 <div class="avatar box-48">
-                                    <img class="b-a-radius-circle" src="img/avatars/4.jpg" alt="">
+                                    <img class="b-a-radius-circle" src="/img/avatars/4.jpg" alt="">
                                     <span class="n-icon bg-primary"><i class="ti-plus"></i></span>
                                 </div>
                             </div>

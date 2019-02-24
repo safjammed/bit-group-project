@@ -15,7 +15,10 @@
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function (){
         return view('pages.dashboard');
-    })->name('photographerDashboard');
+    })->name('dashboard');
+
+//    Route::get('/code', "Auth.VerificationController@editProject")->name('code');
+    Route::get('/home', 'HomeController@index')->name('home');
 });
 
 
@@ -27,7 +30,10 @@ foreach (glob(__DIR__."/roles/*.php") as $filename)
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/code', 'Auth\LoginController@showCodeForm')->name("code");
+Route::post('/code', 'Auth\LoginController@storeCodeForm');
+
+
 
 Route::group(['middleware' => ['permission:publish articles']], function () {
     //

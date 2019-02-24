@@ -1,5 +1,5 @@
 <footer class="footer">
     <div class="container-fluid">
-        2016 © Neptune
+        {{date("Y")}} © ProMES
     </div>
 </footer>
