@@ -73,7 +73,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'contact faculty student'
         ]);
 
-        Role::create(['name' => 'Marketing manager'])->givePermissionTo([
+        Role::create(['name' => 'marketing manager'])->givePermissionTo([
             'download article',
             'view faculties',
             'view faculty details',
