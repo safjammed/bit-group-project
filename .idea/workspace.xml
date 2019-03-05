@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3cea32cc-b4a0-42b4-b591-a1320bf5b002" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/roles/super-admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/manageUsers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/manageUsers.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -82,8 +81,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/pages/manageUsers.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="679">
-              <caret line="273" column="34" lean-forward="true" selection-start-line="273" selection-start-column="34" selection-end-line="273" selection-end-column="34" />
+            <state relative-caret-position="2787">
+              <caret line="337" column="51" lean-forward="true" selection-start-line="337" selection-start-column="51" selection-end-line="337" selection-end-column="51" />
               <folding>
                 <element signature="e#8239#12317#0#HTML" />
               </folding>
@@ -309,6 +308,17 @@
             <path>
               <item name="bit-group-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="bit-group-project" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bit-group-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bit-group-project" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bit-group-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bit-group-project" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -375,18 +385,17 @@
       <workItem from="1551457609131" duration="2912000" />
       <workItem from="1551472028780" duration="11000" />
       <workItem from="1551477598425" duration="2486000" />
-      <workItem from="1551539642843" duration="5680000" />
+      <workItem from="1551539642843" duration="8420000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39686000" />
+    <option name="totallyTimeSpent" value="42426000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14765458" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14765458" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -401,7 +410,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32855567" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3296582" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32855567" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32855567" />
       <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -774,8 +783,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pages/manageUsers.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="679">
-          <caret line="273" column="34" lean-forward="true" selection-start-line="273" selection-start-column="34" selection-end-line="273" selection-end-column="34" />
+        <state relative-caret-position="2787">
+          <caret line="337" column="51" lean-forward="true" selection-start-line="337" selection-start-column="51" selection-end-line="337" selection-end-column="51" />
           <folding>
             <element signature="e#8239#12317#0#HTML" />
           </folding>

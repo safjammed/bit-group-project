@@ -150,9 +150,9 @@
                                                     @endforeach
                                                 </div>
                                             </div>--}}
-                                            <button class="btn btn-primary edit-data waves-effect" data-toggle="modal" data-target=".default-modal" data-record="{{base64_encode(json_encode($user))}}">DETAILS</button>
-                                            <button class="btn btn-danger confirm" data-url="{{route("deleteUser",["id"=>$user->id])}}" ><i class="ti-trash"></i></button>
-                                            <button class="btn btn-success" data-toggle="modal" data-target=".permission-modal" data-permissions="{{base64_encode(json_encode($user->getAllPermissions()->pluck("id")))}}" > Permissions</button>
+                                            <button class="btn btn-primary edit-data waves-effect waves-light" data-toggle="modal" data-target=".default-modal" data-record="{{base64_encode(json_encode($user))}}">DETAILS</button>
+                                            <button class="btn btn-danger confirm waves-effect waves-light" data-url="{{route("deleteUser",["id"=>$user->id])}}" ><i class="ti-trash"></i></button>
+                                            <button class="btn btn-success waves-effect waves-light edit-permissions" data-toggle="modal" data-target=".permission-modal" data-user-id={{$user->id}} data-permissions="{{base64_encode(json_encode($user->getAllPermissions()->pluck("name")))}}" > Permissions</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -259,18 +259,20 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">Details </h4>
+                        <h4 class="modal-title"> Permissions </h4>
                     </div>
                     <div class="modal-body">
                         @csrf
                         <div class="row">
                             <div class="container">
                             @foreach(\Spatie\Permission\Models\Permission::all() as $permission)
-                            <div class="col-md-4">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <div class="col-md-4 mt-2">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="permisions[]" value="{{$permission->name}}">
+                                    <span class="custom-control-indicator"></span>
                                     <label class="form-check-label" for="exampleCheck1">{{$permission->name}}</label>
-                                </div>
+                                </label>
+
                             </div>
                                 @endforeach
                             </div>
@@ -323,10 +325,24 @@
                 $('[name="id"]').val(data.id).trigger("change");
                 $('[name="role"]').val(data.roles[0].id).trigger("change");
             });
-            $(".close-modal").click(function () {
-                $('.modal input').val("");
-                $('.select2').val("").change();
+            $(".default-modal .close-modal").click(function () {
+                $('.default-modal.modal input').val("");
+                $('.default-modal .select2').val("").change();
             });
+            $(".permission-modal .close-modal").click(function (e) {
+                $(".permission-modal input").prop("checked",false);
+                $(".permission-modal [name='user_id']").val("");
+            });
+            $(".edit-permissions").click(function (e) {
+               var permissions = JSON.parse(atob($(this).data("permissions")));
+               var userId = $(this).data("user-id");
+                $.each(permissions, function (key, permission) {
+                    $(".permission-modal input[value='"+permission+"']").prop("checked",true);
+                });
+                $(".permission-modal [name='user_id']").val(userId);
+               console.log(permissions);
+            });
+
         });
     </script>
 @endsection
