@@ -1,5 +1,5 @@
 <footer class="footer">
     <div class="container-fluid">
-        {{date("Y")}} © ProMES
+        {{date("Y")}} © ScriptLauncher
     </div>
 </footer>

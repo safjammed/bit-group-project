@@ -34,3 +34,14 @@
     border:1px solid #f5f5f5;
     max-width: 320px;
 }
+.skin-1 .navbar-light .navbar-nav .nav-link, .skin-1 .navbar-light .navbar-nav .open > .nav-link, .navbar-light .navbar-nav .open > .nav-link:focus{
+    color: #fff;
+}
+
+.skin-1 .site-sidebar .sidebar-menu .with-sub li.active a,
+.skin-3 .site-sidebar .sidebar-menu .with-sub li.active a,
+.skin-5 .site-sidebar .sidebar-menu .with-sub li.active a{
+    border-left: 6px solid #000;
+    background-color: #efefef;
+}
+.intl-tel-input { width: 100%; }

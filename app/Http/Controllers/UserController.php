@@ -11,21 +11,32 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     public function addUser(Request $request){
-
-       $request->validate([
+//        return $request->input();
+        //make phone
+        $phone = $request->input("phone");
+        $phone_withintl= $request->input("phone_withintl");
+        $countryCode = str_replace($phone,"",$phone_withintl);
+        if ($request->input('country_code') != ""){
+            $countryCode =$request->input('country_code');
+            $phone = str_replace($countryCode,"", $phone_withintl);
+        }
+        $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:3', 'confirmed'],
+            'phone' => ['unique:users'],
+            'two_factor' => ['required'],
             'role' =>['required','numeric'],
         ]);
-       $rolename = Role::findById($request->input("role"))->name;
-       $statement = User::create([
-           'name' => $request->input('name'),
-           'email' => $request->input('email'),
-           'password' => Hash::make($request->input('password')),
-           'sector_id' => ($request->has("sector") ? $request->input('sector') : null),
-           'output_title_id' => ($request->has("outputTitle") ? $request->input('outputTitle') : null),
-       ])->assignRole($rolename);
+        $rolename = Role::findById($request->input("role"))->name;
+        $statement = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $phone,
+            'country_code' => $countryCode,
+            'two_factor' => ($request->input('two_factor') == "0" ? false : true),
+            'password' => Hash::make($request->input('password')),
+        ])->assignRole($rolename);
 
         if ($statement){
             return redirect()->route("manageUsers")->with("success",$request->input("name")." has been added");
@@ -36,26 +47,38 @@ class UserController extends Controller
     public function updateUser(Request $request){
 //        return $request->input();
         $validation = [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'string', 'email', 'max:191'],
+            'two_factor' => ['required'],
             'role' =>['required','numeric'],
         ];
-       $updater =[
-           'name' => $request->input('name'),
-           'email' => $request->input('email'),
-           'sector_id' => ($request->has("sector_id") ? $request->input('sector_id') : null),
-           'output_title_id' => ($request->has("outputTitle") ? $request->input('outputTitle') : null),
-       ];
-       if ($request->has("password") && ($request->input("password") != "" || $request->input("password") != null)  ){
-           $updater['password'] = Hash::make($request->input('password'));
-           $validation['password'] =['string', 'min:3', 'confirmed'];
-       }
+
+        //make phone
+        $phone = $request->input("phone");
+        $phone_withintl= $request->input("phone_withintl");
+        $countryCode = str_replace($phone,"",$phone_withintl);
+        if ($request->input('country_code') != ""){
+            $countryCode =$request->input('country_code');
+            $phone = str_replace($countryCode,"", $phone_withintl);
+        }
+
+        $updater =[
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $phone,
+            'country_code' => $countryCode,
+            'two_factor' => $request->input('two_factor'),
+        ];
+        if ($request->has("password") && ($request->input("password") != "" || $request->input("password") != null)  ){
+            $updater['password'] = Hash::make($request->input('password'));
+            $validation['password'] =['string', 'min:3', 'confirmed'];
+        }
 
         $request->validate($validation);
 
         $rolename = Role::findById($request->input("role"))->name;
 
-       $statement = User::findOrFail($request->input("id"))->update($updater);
+        $statement = User::findOrFail($request->input("id"))->update($updater);
         //update role
         User::findOrFail($request->input("id"))->syncRoles([$rolename]);
 
@@ -83,5 +106,24 @@ class UserController extends Controller
         }else{
             return redirect()->route("manageUsers")->with("error","Error Occured or ".$user->name." is already ".$rolename);
         }
+    }
+
+    public function updatePermission(Request $request)
+    {
+        if (! $request->has(["user_id", "permissions"]) ){
+            return redirect()->route("manageUsers")->withInput()->with("error","Hey! No user to give permission to 😒");
+        }
+
+        $permissions = $request->input("permissions");
+        $user = User::findOrFail($request->input("user_id"));
+
+        if ($user->syncPermissions($permissions)){
+            return redirect()->route("manageUsers")->with("success", "Changed the permissions of ".$user->name." ");
+        }else{
+            return redirect()->route("manageUsers")->with("error","Error Occured or ".$user->name." already has the permissions");
+        }
+
+
+
     }
 }

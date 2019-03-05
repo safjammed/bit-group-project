@@ -1,8 +1,7 @@
 @extends('layouts.master')
 
 @section('extra_css')
-    <link rel="stylesheet" href="{{asset("vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css")}}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{asset("vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css")}}">s
     <link rel="stylesheet" href="/vendor/DataTables/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/vendor/DataTables/Responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/vendor/DataTables/Buttons/css/buttons.dataTables.min.css">
@@ -68,11 +67,31 @@
                             <input id="email" placeholder="Email" type="email"
                                    class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
                                    value="{{ old('email') }}" required>
-
-
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Phone</label>
+                        <div class="col-sm-10">
+                            <input id="phone" type="text" class="tel-input auto form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone">
+                            <input type="hidden" name="country_code" value=""/>
+                        </div>
+                    </div>
+                    <fieldset class="form-group row">
+                        <div class="col-sm-8 offset-sm-2">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="two_factor" value="1" checked>
+                                    Turn On two factor Verification
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="two_factor" value="0">
+                                    Turn Off two factor Verification
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
@@ -80,9 +99,9 @@
                                    class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                    name="password" required>
 
-
                         </div>
                     </div>
+
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Confirm Password</label>
@@ -95,7 +114,7 @@
                         <label class="col-sm-2 col-form-label">User Role</label>
                         <div class="col-sm-10">
 
-                            <select name="role" class="select2 w-100" required>
+                            <select name="role" class="form-control" required data-plugin="select2">
                                 @foreach($roles as $index => $role)
                                     <option value="{{$role->id}}">{{$role->name}}</option>
                                 @endforeach
@@ -103,7 +122,6 @@
 
                         </div>
                     </div>
-
 
 
                     <div class="form-group row">
@@ -208,6 +226,31 @@
 
                                     </div>
                                 </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Phone</label>
+                            <div class="col-sm-10">
+                                <input type="text"
+                                       class="tel-input form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
+                                       name="phone">
+                                <input type="hidden" name="country_code" value=""/>
+                            </div>
+                        </div>
+                        <fieldset class="form-group row">
+                            <div class="col-sm-8 offset-sm-2">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="two_factor" value="1" checked>
+                                        Turn On two factor Verification
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="two_factor" value="0">
+                                        Turn Off two factor Verification
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
 
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Update Password</label>
@@ -268,7 +311,7 @@
                             @foreach(\Spatie\Permission\Models\Permission::all() as $permission)
                             <div class="col-md-4 mt-2">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" name="permisions[]" value="{{$permission->name}}">
+                                    <input type="checkbox" class="custom-control-input" name="permissions[]" value="{{$permission->name}}">
                                     <span class="custom-control-indicator"></span>
                                     <label class="form-check-label" for="exampleCheck1">{{$permission->name}}</label>
                                 </label>
@@ -311,29 +354,42 @@
     <script type="text/javascript" src="/vendor/DataTables/Buttons/js/buttons.colVis.min.js"></script>
     <script type="text/javascript" src="/js/tables-datatable.js"></script>
     <script type="text/javascript" src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script>
+    <script type="text/javascript" src="{{asset("/vendor/select2/dist/js/select2.min.js")}}"></script>
+    <script type="text/javascript">
         $(function () {
-            $(".edit-data").click(function () {
+            $(document).on("click", ".edit-data", function () {
                 var that = $(this);
 
                 var data = JSON.parse(atob(that.data("record")));
                 console.log(data);
-                $.each(data,function (key,val) {
-                    $('[name="'+key+'"]').val(val).trigger("change");
+                $.each(data, function (key, val) {
+                    $('.default-modal [name="' + key + '"]:not([type="radio"])').val(val).trigger("change");
                 });
-                $('[name="id"]').val(data.id).trigger("change");
-                $('[name="role"]').val(data.roles[0].id).trigger("change");
+                $('.default-modal [name="id"]').val(data.id).trigger("change");
+                $('.default-modal [name="role"]').val(data.roles[0].id).trigger("change");
+                $(".default-modal [name='two_factor']").map(function () {
+                    console.log($(this), $(this).val(), data.two_factor);
+                    if ($(this).val() == data.two_factor){
+                        $(this).prop("checked", true);
+                    }
+                });
+                var instance = intlTelInputGlobals.getInstance($(".default-modal .tel-input")[0]);
+                var number = data.country_code+data.phone;
+                if (number){
+                    instance.setNumber(number);
+                }
+
+                $(".default-modal #del").attr("data-url",window.location.origin+"/users/"+data.id+"/delete");
             });
-            $(".default-modal .close-modal").click(function () {
-                $('.default-modal.modal input').val("");
-                $('.default-modal .select2').val("").change();
+            $("default-modal .close-modal").click(function () {
+                $('.default-modal input[type="text"]').val("");
+                $('default-modal .select2').val("").change();
             });
             $(".permission-modal .close-modal").click(function (e) {
                 $(".permission-modal input").prop("checked",false);
                 $(".permission-modal [name='user_id']").val("");
             });
-            $(".edit-permissions").click(function (e) {
+            $(document).on("click", ".edit-permissions", function (e) {
                var permissions = JSON.parse(atob($(this).data("permissions")));
                var userId = $(this).data("user-id");
                 $.each(permissions, function (key, permission) {
