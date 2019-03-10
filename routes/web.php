@@ -20,6 +20,9 @@ Route::group(['middleware' => ['auth']], function () {
 //    Route::get('/code', "Auth.VerificationController@editProject")->name('code');
     Route::get('/home', 'HomeController@index')->name('home');
 });
+//Faculty
+Route::resource('faculty','FacultyController');
+Route::get('/all/faculty','FacultyController@Allfaculty')->name('all.faculty');
 
 
 
