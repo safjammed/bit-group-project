@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('demo'),
             'country_code' => '+880',
             'phone' => '1718780072',
-            'two_factor' => true
+            'two_factor' => false
         ])->assignRole('super-admin');
         User::create([
             'name' => "Super Admin",
@@ -43,18 +43,12 @@ class UsersTableSeeder extends Seeder
             'name' => "Marketing CO",
             'email' => "marketing-co@gmail.com",
             'password' => Hash::make('demo'),
-        ])->assignRole('marketing CO');
+        ])->assignRole('marketing coordinator');
         User::create([
-            'name' => "Project Manager",
-            'email' => "projectmanager@gmail.com",
+            'name' => "marketingmanager",
+            'email' => "marketingmanager@gmail.com",
             'password' => Hash::make('demo'),
-        ])->assignRole('project manager');
-
-        User::create([
-            'name' => "Director",
-            'email' => "director@gmail.com",
-            'password' => Hash::make('demo'),
-        ])->assignRole('director');
+        ])->assignRole('marketing manager');
 
         $faker = Faker::create();
 

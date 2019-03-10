@@ -22,12 +22,6 @@
             <h6>Layouts</h6>
             <div class="row m-b-2 text-xs-center">
                 <div class="col-xs-6 m-b-2">
-                    <a href="index.html">
-                        <img src="img/layouts/1.png" class="img-fluid">
-                    </a>
-                    <div class="text-muted">Default</div>
-                </div>
-                <div class="col-xs-6 m-b-2">
                     <label>
                         <input name="compact-sidebar" type="checkbox">
                         <div class="to-icon"><i class="ti-check"></i></div>

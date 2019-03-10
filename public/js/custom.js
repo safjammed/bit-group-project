@@ -1,13 +1,111 @@
 $(function(){
+    window.setCookie = function (cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = 'expires='+ d.toUTCString();
+        document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+    }
+    window.getCookie = function(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    $(".to-content input").click(function (e) {
+        var val = $(this).attr("type") == "radio"? $(this).val() : $(this).prop("checked");
+        var cname = $(this).attr("name");
+        console.log($(this).attr("name"), val);
+        setCookie(cname,val,365);
+    });
+    $(".to-content input[type='checkbox']").map(function (key, elm) {
+        var cname = $(elm).attr("name");
+        var cookieValue = getCookie(cname);
+        if (cookieValue == "true" ){
+            $("body").addClass(cname);
+            $(elm).prop("checked", true);
+        }
+    });
+
+    //skin
+    var skinClass = getCookie("skin");
+    var elm = $(".to-content input[value='"+skinClass+"']");
+    if (elm.length  == 1){
+        if (elm.is("checked")){
+            //do nothing
+        }else{
+            elm.trigger("click");
+        }
+    }
+
     if ($("#date-range").length >=1 ){
         $('#date-range').datepicker({
             toggleActive: true,
             format: "yyyy-mm-dd",
         });
     }
-    if ($(".select2").length >=1 ) {
-        $('.select2').select2();
+
+    /************************************
+     *                                  *
+     *            SELECT 2              *
+     *                                  *
+     * *********************************/
+    if ($("[data-plugin='select2'], .select2").length >= 1){
+        $("head").prepend('<link rel="stylesheet" href="/vendor/select2/dist/css/select2.min.css">\n');
+        $.getScript("/vendor/select2/dist/js/select2.min.js").done(function (resp) {
+            $('[data-plugin="select2"], .select2').select2($(this).attr('data-options'));
+        })
+
+
     }
+
+
+    /************************************
+     *                                  *
+     * INTERNATIONAL TELEPHONE INPUT    *
+     *                                  *
+     * *********************************/
+
+
+    if ($(".tel-input").length >= 1){
+        console.log("telephone input found");
+        $("head").append("<link href='/vendor/intl-tel-input/build/css/intlTelInput.min.css' type='text/css' rel='stylesheet'>");
+        $.getScript("/vendor/intl-tel-input/build/js/intlTelInput.min.js").done(function (data) {
+
+            $(".tel-input").map(function () {
+                var that = $(this);
+                var init = intlTelInput(that[0],{
+                    initialCountry: "auto",
+                    hiddenInput:"phone_withintl",
+                    width: "100%",
+                    utilsScript: "/vendor/intl-tel-input/build/js/utils.js",
+                    geoIpLookup: function(success, failure) {
+                        $.get("https://ipinfo.io?token=8a608a1e4cd6b6", function() {}, "jsonp").always(function(resp) {
+                            var countryCode = (resp && resp.country) ? resp.country : "";
+                            success(countryCode);
+                        });
+                    },});
+                that.on("countrychange", function () {
+                    var countryData = init.getSelectedCountryData();
+                    var countryCode = "+"+countryData.dialCode;
+                    that.closest(".form-group").find('[name="country_code"]').val(countryCode);
+                    console.log(that.closest(".form-group").find('[name="country_code"]'), countryCode);
+                });
+
+
+            })
+        });
+    }
+
+
     //confirmation
     if ($(".confirm").length >=1 ){
         window.confirm = function(ths){

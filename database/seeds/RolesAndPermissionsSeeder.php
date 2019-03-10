@@ -18,28 +18,76 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-//        Permission::create(['name' => 'edit articles']);
-//        Permission::create(['name' => 'delete articles']);
-//        Permission::create(['name' => 'publish articles']);
-//        Permission::create(['name' => 'unpublish articles']);
+        Permission::create(['name' => 'add user']);
+        Permission::create(['name' => 'define user roles']);
+        Permission::create(['name' => 'view users']);
+        Permission::create(['name' => 'modify users']);
+        Permission::create(['name' => 'assign permissions']);
+        Permission::create(['name' => 'assign marketing coordinator']);
+//        Permission::create(['name' => 'assign student to faculty']);
+        Permission::create(['name' => 'edit system data']);
 
-        // create roles and assign created permissions
+        Permission::create(['name' => 'add faculty']);
+        Permission::create(['name' => 'modify faculty']);
+        Permission::create(['name' => 'view faculties']);
+        Permission::create(['name' => 'view faculty details']);
+        Permission::create(['name' => 'make comment on article']);
+        Permission::create(['name' => 'add article and pictures']);
+        Permission::create(['name' => 'modify articles and pictures']);
 
-        // this can be done as separate statements
-//        $role = Role::create(['name' => 'user']);
-//        $role->givePermissionTo('edit articles');
+        Permission::create(['name' => 'download article']);
+        Permission::create(['name' => 'contact faculty student']);
+        Permission::create(['name' => 'select articles for publication']);
+        Permission::create(['name' => 'unselect articles for publication']);
+        Permission::create(['name' => 'view selected articles']);
 
-        // or may be done by chaining
-//        $role = Role::create(['name' => 'student']);
-//            ->givePermissionTo(['publish articles', 'unpublish articles']);
 
-        $role = Role::create(['name' => 'super-admin']);
-        $role = Role::create(['name' => 'administrator']);
-        $role = Role::create(['name' => 'student']);
-        $role = Role::create(['name' => 'marketing CO']);
-        $role = Role::create(['name' => 'project manager']);
-        $role = Role::create(['name' => 'director']);
-//        $role->givePermissionTo(Permission::all());
+
+        Role::create(['name' => 'administrator'])->givePermissionTo([
+            'add user',
+            'define user roles',
+            'view users',
+            'modify users',
+            'assign permissions',
+            'assign marketing coordinator',
+            'edit system data',
+            'add faculty',
+            'modify faculty',
+            'view faculties',
+            'view faculty details',
+        ]);
+
+        Role::create(['name' => 'student'])->givePermissionTo([
+            'add article and pictures',
+            'modify articles and pictures',
+            'view faculties',
+            'view faculty details',
+        ]);
+
+        Role::create(['name' => 'marketing coordinator'])->givePermissionTo([
+            'download article',
+            'view faculties',
+            'view selected articles',
+            'select articles for publication',
+            'unselect articles for publication',
+            'contact faculty student'
+        ]);
+
+        Role::create(['name' => 'marketing manager'])->givePermissionTo([
+            'download article',
+            'view faculties',
+            'view faculty details',
+            'view selected articles',
+            'select articles for publication',
+            'contact faculty student'
+        ]);
+        Role::create(['name' => 'guest'])->givePermissionTo([
+            'view faculties',
+            'view faculty details',
+            'view selected articles'
+        ]);
+
+        Role::create(['name' => 'super-admin'])->givePermissionTo(Permission::all());
 
     }
 }
