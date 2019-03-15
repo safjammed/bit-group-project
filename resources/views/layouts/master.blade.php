@@ -25,7 +25,7 @@
                     <label>
                         <input name="compact-sidebar" type="checkbox">
                         <div class="to-icon"><i class="ti-check"></i></div>
-                        <img src="img/layouts/2.png" class="img-fluid">
+                        <img src="/img/layouts/2.png" class="img-fluid">
                     </label>
                     <div class="text-muted">Compact Sidebar</div>
                 </div>
@@ -33,7 +33,7 @@
                     <label>
                         <input name="fixed-header" type="checkbox" checked>
                         <div class="to-icon"><i class="ti-check"></i></div>
-                        <img src="img/layouts/3.png" class="img-fluid">
+                        <img src="/img/layouts/3.png" class="img-fluid">
                     </label>
                     <div class="text-muted">Fixed Header</div>
                 </div>
@@ -41,7 +41,7 @@
                     <label>
                         <input name="boxed-wrapper" type="checkbox">
                         <div class="to-icon"><i class="ti-check"></i></div>
-                        <img src="img/layouts/4.png" class="img-fluid">
+                        <img src="/img/layouts/4.png" class="img-fluid">
                     </label>
                     <div class="text-muted">Boxed Wrapper</div>
                 </div>

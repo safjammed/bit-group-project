@@ -10,6 +10,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/users/permissions/update', ['middleware' => ['permission:assign permissions'],'uses'=>"UserController@updatePermission"])->name('updatePermission');
 
 
+    //docuemnt viewer
+    Route::get('/submission/{submission_id}/view', ['middleware' => ['permission:view articles and pictures'],'uses'=>"PageController@submissionView"])->name('submissionView');
+    Route::get('/document/load', ['middleware' => ['permission:view articles and pictures'],'uses'=>"ApiController@loadDocument"])->name('loadDocument');
+    Route::get('/picture/{file}/load', ['middleware' => ['permission:view articles and pictures'],'uses'=>"ApiController@loadPicture"])->name('loadDocument');
+
 
 //    Route::get('/users', "PageController@manageUsers")->name('manageUsers');
 //    Route::post('/users/add', "UserController@addUser")->name('addUser');
