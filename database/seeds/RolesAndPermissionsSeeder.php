@@ -63,7 +63,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'modify articles and pictures',
             'view faculties',
             'view faculty details',
-            'view articles and pictures'
+            'view articles and pictures',
+            'make comment on article'
         ]);
 
         Role::create(['name' => 'marketing coordinator'])->givePermissionTo([
@@ -73,7 +74,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'select articles for publication',
             'unselect articles for publication',
             'contact faculty student',
-            'view articles and pictures'
+            'view articles and pictures',
+            'make comment on article'
         ]);
 
         Role::create(['name' => 'marketing manager'])->givePermissionTo([

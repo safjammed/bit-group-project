@@ -10,10 +10,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/users/permissions/update', ['middleware' => ['permission:assign permissions'],'uses'=>"UserController@updatePermission"])->name('updatePermission');
 
 
+    Route::get('/closures', ['middleware' => ['permission:edit system data'],'uses'=>"PageController@manageClosures"])->name('manageClosures');
+
+
+    Route::post('/comment/add', ['middleware' => ['permission:make comment on article'],'uses'=>"CommentsController@addComment"])->name('addComment');
+
     //docuemnt viewer
+    Route::get('/submission', ['middleware' => ['permission:view articles and pictures'],'uses'=>"PageController@allSubmissions"])->name('allSubmissions');
     Route::get('/submission/{submission_id}/view', ['middleware' => ['permission:view articles and pictures'],'uses'=>"PageController@submissionView"])->name('submissionView');
     Route::get('/document/load', ['middleware' => ['permission:view articles and pictures'],'uses'=>"ApiController@loadDocument"])->name('loadDocument');
-    Route::get('/picture/{file}/load', ['middleware' => ['permission:view articles and pictures'],'uses'=>"ApiController@loadPicture"])->name('loadDocument');
+    Route::get('/picture/{file}/load', ['middleware' => ['permission:view articles and pictures'],'uses'=>"ApiController@loadPicture"])->name('loadPicture');
+    Route::get('/submission/{submission}/delete', ['middleware' => ['permission:modify articles and pictures'],'uses'=>"SubmissionController@deleteSubmission"])->name('deleteSubmission');
 
 
 //    Route::get('/users', "PageController@manageUsers")->name('manageUsers');

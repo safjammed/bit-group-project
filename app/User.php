@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Faculty;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,6 +49,14 @@ class User extends Authenticatable
     public function getPhoneNumber()
     {
         return $this->country_code.$this->phone;
+    }
+
+    public function faculty(){
+        if ($this->hasRole("student")) { //student
+            return $this->belongsToMany("App\Models\Faculty", "faculty_student")->withTimestamps();
+        }else{ //marketing co
+            return Faculty::where("user_id", $this->id)->first();
+        }
     }
 
 }

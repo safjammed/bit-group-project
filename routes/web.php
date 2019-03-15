@@ -36,6 +36,9 @@ Auth::routes();
 Route::get('/code', 'Auth\LoginController@showCodeForm')->name("code");
 Route::post('/code', 'Auth\LoginController@storeCodeForm');
 
+Route::get("/what",function (){
+    dd(\Auth::user()->faculty()->students);
+});
 
 
 Route::group(['middleware' => ['permission:publish articles']], function () {

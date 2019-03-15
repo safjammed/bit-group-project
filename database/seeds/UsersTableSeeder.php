@@ -60,6 +60,14 @@ class UsersTableSeeder extends Seeder
             ])->assignRole('student');
         }
 
+        foreach (range(1,3) as $index) {
+            User::create([
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'password' => Hash::make('demo'),
+            ])->assignRole('marketing coordinator');
+        }
+
 
 
 

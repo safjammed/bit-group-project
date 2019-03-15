@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
-class CreateFacultysTable extends Migration
+class CreateFacultiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +14,13 @@ class CreateFacultysTable extends Migration
      */
     public function up()
     {
-        Schema::create('facultys', function (Blueprint $table) {
+        Schema::create('faculties', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('faculty');
+
+            $table->unsignedInteger('user_id')->nullable(); //contains the id of marketing CO
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateFacultysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facultys');
+        Schema::dropIfExists('faculties');
     }
 }

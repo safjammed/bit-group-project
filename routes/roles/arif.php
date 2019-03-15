@@ -1,2 +1,2 @@
 <?php
-Route::get('/faculties', 'FacultyController@test')->name('showFaculties');
+Route::get('/faculties', 'FacultyController@index')->name('showFaculties');

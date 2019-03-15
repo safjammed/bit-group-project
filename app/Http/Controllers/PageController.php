@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Closure;
+use App\Models\Faculty;
 use App\Models\Submission;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\IOFactory;
@@ -23,18 +26,16 @@ class PageController extends Controller
         //check if the user is the owner or marketing CO
         $submission = Submission::findOrFail($submission_id);
 
-        $roles =(array) Auth::user()->getRoleNames();
-
-//        dd($roles);
+        $roles = Auth::user()->getRoleNames();
         if (
-            in_array("super-admin", $roles)||
-            in_array("marketing coordinator", $roles) ||
-            (in_array("student", $roles) && $submission->user_id == Auth::user()->id)
+            ($roles->first() == "super-admin" ) ||
+            ($roles->first() == "student" && $submission->user_id == Auth::id()) ||
+            ($roles->first() == "marketing coordinator" && $submission->faculty_id == Auth::user()->faculty()->id)
         )
         {
             //continue
         }else{
-            redirect()->route("home");
+           return redirect()->to("/");
         }
 
         $filename = $submission->name;
@@ -45,12 +46,36 @@ class PageController extends Controller
             //generate html
             $phpword->save("data/document.html",'HTML');
         }
+        $submissionController = new SubmissionController();
+        $status = $submissionController->getSubmissionStatus($submission);
 
-
-        return view("pages.submissionView",[
+        return view("pages.Submissions.submissionView",[
             'type' => $submission->type,
             'file' => $filename,
-            'submission' => $submission
+            'submission' => $submission,
+            "status" => $status
+        ]);
+    }
+
+    public function allSubmissions(){
+        $user = Auth::user();
+        if ($user->hasRole('super-admin')== false && $user->hasPermissionTo('add articles and pictures')){ //if a student
+            $submissions = Submission::where("user_id", $user->id);
+        }else{
+            $submissions = Submission::all();
+        }
+
+        return view("pages.Submissions.allSubmissions",[
+            "submissions" => $submissions
+        ]);
+    }
+
+    public function manageClosures(){
+        $closures = Closure::all();
+        $faculties = Faculty::all();
+        return view("pages.manageClosures",[
+            "closures" => $closures,
+            "faculties" => $faculties,
         ]);
     }
 }
