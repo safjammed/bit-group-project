@@ -22,6 +22,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/picture/{file}/load', ['middleware' => ['permission:view articles and pictures'],'uses'=>"ApiController@loadPicture"])->name('loadPicture');
     Route::get('/submission/{submission}/delete', ['middleware' => ['permission:modify articles and pictures'],'uses'=>"SubmissionController@deleteSubmission"])->name('deleteSubmission');
 
+    Route::get("/faculty_students",['middleware' => ['permission:modify faculty'],'uses'=>"PageController@facultyStudents"])->name("facultyStudents");
+    Route::get("/faculty/{faculty}/students/{user}/delete",['middleware' => ['permission:modify faculty'],'uses'=>"FacultyController@deleteStudent"])->name("deleteStudent");
+    Route::get("/faculty/{faculty}/view",['middleware' => ['permission:modify faculty'],'uses'=>"PageController@facultyDetails"])->name("facultyDetails");
+    Route::post("/faculty/students/add",['middleware' => ['permission:modify faculty'],'uses'=>"FacultyController@addStudent"])->name("addStudent");
 
 //    Route::get('/users', "PageController@manageUsers")->name('manageUsers');
 //    Route::post('/users/add', "UserController@addUser")->name('addUser');

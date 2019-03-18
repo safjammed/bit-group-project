@@ -26,9 +26,6 @@
 
 
 
-<!-- layouts for Notificaiton -->
-@include ('_partial.message')
-
 @yield('extra_js')
 
 

@@ -43,7 +43,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route("showFaculties")}}" class="waves-effect  waves-light">
+                <a href="{{route("facultyStudents")}}" class="waves-effect  waves-light">
                     <span class="s-icon"><i class="ti-dashboard"></i></span>
                     <span class="s-text">Faculty Students</span>
                 </a>

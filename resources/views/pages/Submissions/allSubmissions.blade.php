@@ -95,11 +95,13 @@
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Year</th>
                                 <th>File</th>
                                 <th>Type</th>
                                 <th>Submitted By</th>
                                 <th>Uploaded At</th>
                                 <th>Last Modified</th>
+                                <th>Status</th>
                                 <th>actions</th>
                             </tr>
                             </thead>
@@ -107,41 +109,45 @@
                             @foreach($submissions as $index => $submission)
                                 <tr>
                                     <td><img src="/img/{{$submission->type}}.png" class="submission-icon"></td>
+                                    <th>{{$submission->closure->academic_year}}</th>
                                     <td>{{$submission->name}}</td>
                                     <td>{{$submission->type}}</td>
                                     <td>{{$submission->submitter->name}}</td>
                                     <td>{{$submission->created_at}}</td>
                                     <td>{{$submission->updated_at}}</td>
+                                    <th>{{($submission->getStatus())->status}}</th>
                                     <td>
                                         <div class="btn-group">
-                                             <div class="dropdown">
-                                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                     Actions
-                                                 </button>
-                                                 <div class="dropdown-menu filter" aria-labelledby="dropdownMenuButton">
-                                                     @can('view articles and pictures')
-                                                         <a class="dropdown-item" href="{{route("submissionView",["submission_id"=>$submission->id])}}" ><i class="ti-eye"></i> View Submission</a>
-                                                     @endcan
-                                                     @can('modify articles and pictures')
-                                                         <a class="dropdown-item" href="{{route("deleteSubmission",["submission"=>$submission->id])}}" > <i class="ti-trash"></i> Delete</a>
-                                                     @endcan
-                                                 </div>
-                                             </div>
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Actions
+                                                </button>
+                                                <div class="dropdown-menu filter" aria-labelledby="dropdownMenuButton">
+                                                    @can('view articles and pictures')
+                                                        <a class="dropdown-item" href="{{route("submissionView",["submission_id"=>$submission->id])}}" ><i class="ti-eye"></i> View Submission</a>
+                                                    @endcan
+                                                    @can('modify articles and pictures')
+                                                        <a class="dropdown-item" href="{{route("deleteSubmission",["submission"=>$submission->id])}}" > <i class="ti-trash"></i> Delete</a>
+                                                    @endcan
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                             <tfoot>
-                                <tr>
-                                    <th>#</th>
-                                    <th>File</th>
-                                    <th>Type</th>
-                                    <th>Submitted By</th>
-                                    <th>Uploaded At</th>
-                                    <th>Last Modified</th>
-                                    <th>actions</th>
-                                </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Year</th>
+                                <th>File</th>
+                                <th>Type</th>
+                                <th>Submitted By</th>
+                                <th>Uploaded At</th>
+                                <th>Last Modified</th>
+                                <th>Status</th>
+                                <th>actions</th>
+                            </tr>
                             </tfoot>
                         </table>
                     </div>

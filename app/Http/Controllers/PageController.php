@@ -78,4 +78,19 @@ class PageController extends Controller
             "faculties" => $faculties,
         ]);
     }
+    public function facultyStudents()
+    {
+        $faculties = Faculty::all();
+        $students = User::role('student')->get();
+        return view("pages.facultyStudents",[
+            "faculties" => $faculties,
+            "students" =>  $students
+        ]);
+    }
+    public function facultyDetails(Faculty $faculty)
+    {
+        return view("pages.facultyDetails",[
+            "faculty" => $faculty
+        ]);
+    }
 }

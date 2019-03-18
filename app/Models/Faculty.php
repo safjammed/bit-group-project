@@ -8,7 +8,7 @@ class Faculty extends Model
 {
     protected $table = "faculties";
     protected $fillable = [
-        'name','user_id',
+        'name','user_id',"seats"
     ];
 
     public function marketingCoordinator(){
@@ -16,5 +16,8 @@ class Faculty extends Model
     }
     public function students(){
         return $this->belongsToMany("App\User","faculty_student")->withTimestamps();
+    }
+    public function submissions(){
+        return  $this->hasMany("App\Models\Submission");
     }
 }

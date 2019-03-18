@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\User;
 use Session;
 use Illuminate\Http\Request;
 use App\Models\Faculty;
@@ -131,5 +132,32 @@ class FacultyController extends Controller
             '<a onclick="editForm('.$faculty->id.')" class="btn btn-sm btn-info">Edit</a>'.' '. 
             '<a onclick="deleteData('.$faculty->id.')" class="btn btn-sm btn-danger">Delete</a>';
           })->make(true);
+    }
+
+    public function deleteStudent(Faculty $faculty, User $user)
+    {
+        if($faculty->students()->detach($user->id))
+        {
+            return redirect()->route("facultyStudents")->withSuccess($user->name." has been removed from ".$faculty->name);
+        }else{
+            return redirect()->route("facultyStudents")->withInput()->withErrors([$user->name." could not be removed from ".$faculty->name]);
+        }
+    }
+    public function addStudent(Request $request)
+    {
+        $faculty = Faculty::findOrFail($request->input("faculty_id"));
+        $user = User::findOrFail($request->input("user_id"));
+        //check if seats are full
+        if($faculty->students()->count() < $faculty->seats ){
+            if($faculty->students()->attach($user->id))
+            {
+                return redirect()->route("facultyStudents")->withSuccess($user->name." has been added to ".$faculty->name);
+            }else{
+//                return redirect()->route("facultyStudents")->withInput()->withErrors([$user->name." could not be added to ".$faculty->name." Faculty Or already added"]);
+            }
+        }else{
+            return redirect()->route("facultyStudents")->withInput()->withErrors([$faculty->name." is already Full!"]);
+        }
+
     }
 }

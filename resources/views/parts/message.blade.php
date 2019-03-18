@@ -34,3 +34,18 @@
         });
     </script>
 @endif
+
+@if ($errors->any())
+    <?php
+    $html = '<ul class="list-unstyled">';
+        foreach ($errors->all() as $error){
+           $html .=' <li>'.$error.'</li>';
+        }
+    $html .= '</ul>';
+    ?>
+    <script>
+        $(function () {
+            swal.fire("Error!", "{!! $html !!}", "error");
+        });
+    </script>
+@endif

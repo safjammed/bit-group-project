@@ -10,6 +10,7 @@
 <body class="large-sidebar fixed-sidebar fixed-header content-appear">
 <div class="wrapper">
 
+    @include("parts.message")
 
     @include('parts.sidebar')
     @include('parts.appSidePanel')
