@@ -116,7 +116,9 @@
                                         <div class="media stream-item">
                                             <div class="media-left">
                                                 <div class="avatar box-64">
-                                                    <img class="b-a-radius-circle" src="/img/teacher.png" alt="">
+
+
+                                                    <img class="b-a-radius-circle" src="/img/{{$comment->commenter->hasRole("student") ?  "student" : "teacher"}}.png"  alt="">
                                                 </div>
                                             </div>
                                             <div class="media-body">

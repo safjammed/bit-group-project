@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('extra_css')
-    <link rel="stylesheet" href="{{asset("vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css")}}">s
+    <link rel="stylesheet" href="{{asset("vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css")}}">
     <link rel="stylesheet" href="/vendor/DataTables/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/vendor/DataTables/Responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/vendor/DataTables/Buttons/css/buttons.dataTables.min.css">

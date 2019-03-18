@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Session;
 use Illuminate\Http\Request;
-use App\Faculty;
+use App\Models\Faculty;
 use Yajra\DataTables\DataTables;
 class FacultyController extends Controller
 {
