@@ -57,16 +57,52 @@ class PageController extends Controller
         ]);
     }
 
-    public function allSubmissions(){
+    public function allSubmissions( $year = false ){
+        if ($year == false){
+            $year = date("Y");
+        }
+        if (strtotime($year) === false) {
+            return abort(404);
+        }
+
+        //get closure
+        $closure = Closure::where("academic_year",$year)->pluck("id");
+        $academic_years = Closure::distinct("academic_year")->pluck("academic_year");
         $user = Auth::user();
-        if ($user->hasRole('super-admin')== false && $user->hasPermissionTo('add articles and pictures')){ //if a student
-            $submissions = Submission::where("user_id", $user->id);
+        if ($user->hasRole('super-admin')== false && $user->can('add articles and pictures')){ //if a student
+            $submissions = Submission::where("user_id", $user->id)->whereIN("closure_id",$closure)->get();
         }else{
-            $submissions = Submission::all();
+            $submissions = Submission::whereIN("closure_id",$closure)->get();
         }
 
         return view("pages.Submissions.allSubmissions",[
-            "submissions" => $submissions
+            "submissions" => $submissions,
+            "academic_years" => $academic_years,
+            "showing_year" => $year
+        ]);
+    }
+    public function selectedSubmissions($year = false ){
+        if ($year == false){
+            $year = date("Y");
+        }
+        if (strtotime($year) === false) {
+            return abort(404);
+        }
+
+        //get closure
+        $closure = Closure::where("academic_year",$year)->pluck("id");
+        $academic_years = Closure::distinct("academic_year")->pluck("academic_year");
+        $user = Auth::user();
+        if ($user->hasRole('super-admin')== false && $user->can('add articles and pictures')){ //if a student
+            $submissions = Submission::where("user_id", $user->id)->where("selected", true)->whereIN("closure_id",$closure)->get();
+        }else{
+            $submissions = Submission::whereIN("closure_id",$closure)->where("selected", true)->get();
+        }
+
+        return view("pages.Submissions.selectedSubmissions",[
+            "submissions" => $submissions,
+            "academic_years" => $academic_years,
+            "showing_year" => $year
         ]);
     }
 

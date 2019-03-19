@@ -5,14 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Closure;
 use App\Models\Submission;
 use Carbon\Carbon;
+use Chumper\Zipper\Zipper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class SubmissionController extends Controller
 {
     //
     public function deleteSubmission(Submission $submission)
     {
-        if ($submission->delete()){
+        $roles = Auth::user()->getRoleNames();
+        if (
+            ($roles->first() == "super-admin" ) ||
+            ($roles->first() == "student" && $submission->user_id == Auth::id()) ||
+            ($roles->first() == "marketing coordinator" && $submission->faculty_id == Auth::user()->faculty()->id)
+        )
+        {}else{
+            return redirect()->to("/");
+        }
+        $file_path = public_path("uploads/submissions/".$submission->name);
+        if (File::exists($file_path) && File::delete($file_path) && $submission->delete() ){
             return redirect()->route("allSubmissions")->withSuccess("The submission has been removed");
         }else{
             return redirect()->route("allSubmissions")->withErrors(['The Submission Could Not Be removed']);
@@ -73,5 +86,72 @@ class SubmissionController extends Controller
             "status" => $status,
             "update" => $updatable
         ];
+    }
+
+    public function selectForPublication(Submission $submission)
+    {
+        $status = $submission->getStatus();
+        $errors = [];
+        if ($status->status == "waiting"){
+            array_push($errors, "Submission has to be commented first");
+        }
+        if ($status->status == "expired"){
+            array_push($errors, "The Submission is expired");
+        }
+        if ($status->status == "selected"){
+            array_push($errors, "The submission is already selected");
+        }
+        if ($status->status ==  "approved"){
+            if ($submission->update([
+                "selected" => 1
+            ])){
+                return redirect()->route("allSubmissions")->withSuccess("The Submission Has been Selected");
+            }else{
+                array_push($errors, "The Submission Could not be selected");
+            }
+        }
+
+        return redirect()->back()->withInput()->withErrors($errors);
+
+    }
+    public function unSelectForPublication(Submission $submission)
+    {
+        $status = $submission->getStatus();
+        $errors = [];
+        if($status->status != "expired" && $status->status != "waiting" && $status->status == "selected"){
+            if ($submission->update([
+                "selected" => false
+            ])){
+                return redirect()->route("allSubmissions")->withSuccess("The Submission Has been Unselected");
+            }else{
+                array_push($errors, "The Submission Could not be Unselected");
+            }
+        }
+
+        return redirect()->back()->withInput()->withErrors($errors);
+
+    }
+
+    public function downloadSelectedZip($year = false){
+        if ($year == false){
+            $year = date("Y");
+        }
+        if (strtotime($year) === false) {
+            return abort(404);
+        }
+        //get closure
+        $closure = Closure::where("academic_year",$year)->pluck("id");
+        $submissions = Submission::whereIN("closure_id",$closure)->where("selected", true)->get();
+
+        $zipper = new Zipper();
+        //make zip file
+        $zipFile = public_path("zip/submissions_".$year.".zip");
+        $zipper->make($zipFile);
+        foreach ($submissions as $index => $submission){
+            $file = public_path("uploads/submissions/".$submission->name);
+            $zipper->folder( $submission->submitter->name )->add($file);
+        }
+        $zipper->close();
+        return response()->download($zipFile);
     }
 }

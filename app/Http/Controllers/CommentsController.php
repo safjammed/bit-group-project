@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\extras\Mailer;
 use App\Models\Comment;
 use App\Models\Submission;
 use Carbon\Carbon;
@@ -36,9 +37,42 @@ class CommentsController extends Controller
             "user_id" =>  Auth::id(),
             "submission_id" => $submission->id,
         ])){
+            //mail marketing co and student
+            $mailer = new Mailer();
+
+            $student_mail = $submission->submitter->email;
+            $mco_mail = $submission->faculty->marketingCoordinator->email;
+            $subject = "[ScriptLauncher] New Comment";
+            $title = Auth::user()->name." has posted a comment.";
+            $body = "[".(Auth::user()->name). "] : ".$request->input("content");
+            $cta = [
+                "link" => route("submissionView",[$submission->id]),
+                "text" => "Go To Submission Page"
+            ];
+            $mailer->sendMail(
+                $student_mail,
+                $subject,
+                $title,
+                $body,
+                $cta
+            );
+            $mailer->sendMail(
+                $mco_mail,
+                $subject,
+                $title,
+                $body,
+                $cta
+            );
+
             return redirect()->back()->withSuccess("The Comment Has been Added");
         }else{
             return redirect()->back()->withInput()->withErrors(['The Comment Could Not Be Added']);
         }
     }
+
+    public function test(){
+        $mailer = new Mailer();
+        return $mailer->sendMail();
+    }
+
 }

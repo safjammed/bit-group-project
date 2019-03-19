@@ -15,16 +15,19 @@
         .default-modal .select2-container {
             width: 100% !important;
         }
+        .btn-outline-primary:hover{
+            color: #fff !important;
+        }
     </style>
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <h4>Submissions</h4>
+            <h4>Selected Submissions</h4>
             <ol class="breadcrumb no-bg m-b-1">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Submissions</li>
+                <li class="breadcrumb-item active">Selected Submissions</li>
             </ol>
 
 
@@ -39,58 +42,10 @@
                     </div>
                 </div>
             @endif
-
-            @can('add article and pictures')
-            <form method="POST" action="">
-                @csrf
-                <div class="box box-block bg-white">
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <h4>Add New Project Output Indicator</h4>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                            <input id="name" placeholder="Name" type="text"
-                                   class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                   value="{{ old('name') }}" required autofocus>
-
-
-                        </div>
-                    </div>
-                    <fieldset class="form-group row">
-                        <div class="col-sm-8 offset-sm-2">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="two_factor" value="1" checked>
-                                    Turn On two factor Verification
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="two_factor" value="0">
-                                    Turn Off two factor Verification
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <div class="form-group row">
-                        <div class="col-sm-2 offset-md-4">
-                            <button type="submit" class="btn btn-info btn-block py-2">
-                                <strong>Create</strong>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            @endcan
             <div class="box box-block bg-white">
                 <div class="row  m-b-3">
                     <div class="col-md-6">
-                        <h5 class="m-b-1">Submissions of {{$showing_year}}</h5>
+                        <h5 class="m-b-1">Selected Submissions of {{$showing_year}}</h5>
                     </div>
                     <div class="offset-md-3 col-md-1">
                         <p> Academic Year</p>
@@ -102,11 +57,13 @@
                                 <option value="{{$academic_year}}"  {{($showing_year == $academic_year)? "selected" : "" }}>{{$academic_year}}</option>
                             @endforeach
                         </select>
+
                     </div>
                 </div>
                 <div class="row">
 
                     <div class="col-md-12">
+
 
                         <table class="table table-hovertable-bordered dataTable" id="table-2">
                             <thead>
@@ -167,6 +124,14 @@
                             </tr>
                             </tfoot>
                         </table>
+                        @can("download article")
+                        <div class="btn-group pull-left" role="group">
+                            <a class="btn btn-lg btn-outline-primary waves-effect" href="{{route("downloadSelectedZip",[$showing_year])}}">
+                                <i class="ti-download"></i> Download Submissions
+                            </a>
+                            <a href="" id="#download-node" class="hidden"></a>
+                        </div>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -198,7 +163,7 @@
         $(function () {
             $("#academic_year").change(function (e) {
                 var year = $(this).val();
-                var url =  window.location.origin + "/submission/of/" + year;
+                var url =  window.location.origin + "/submission/selected/of/" + year;
 
                 return window.location.href=url;
 

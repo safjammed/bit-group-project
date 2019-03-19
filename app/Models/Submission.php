@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Submission extends Model
 {
     protected $fillable = [
-        "name", "type", "user_id", "commented_at"
+        "name", "type", "user_id", "commented_at","selected"
     ];
 
     public function submitter(){
@@ -19,6 +19,9 @@ class Submission extends Model
     }
     public function closure(){
         return $this->belongsTo("App\Models\Closure");
+    }
+    public function faculty(){
+        return $this->belongsTo("App\Models\Faculty");
     }
 
     public function getStatus()

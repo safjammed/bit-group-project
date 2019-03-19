@@ -31,17 +31,6 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-left animated flipInY">
-                        {{--<a class="dropdown-item" href="#">--}}
-                            {{--<i class="ti-email m-r-0-5"></i> Inbox--}}
-                        {{--</a>--}}
-                        {{--<a class="dropdown-item" href="#">--}}
-                            {{--<i class="ti-user m-r-0-5"></i> Profile--}}
-                        {{--</a>--}}
-                        {{--<a class="dropdown-item" href="#">--}}
-                            {{--<i class="ti-settings m-r-0-5"></i> Settings--}}
-                        {{--</a>--}}
-                        {{--<div class="dropdown-divider"></div>--}}
-                        {{--<a class="dropdown-item" href="#"><i class="ti-help m-r-0-5"></i> Help</a>--}}
 
                         <a class="dropdown-item" href="{{route("logout")}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="ti-power-off m-r-0-5"></i> Sign out</a>
                         <form id="logout-form" action="{{route("logout")}}" method="POST" style="display: none;">

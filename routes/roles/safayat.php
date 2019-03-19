@@ -17,7 +17,18 @@ Route::group(['middleware' => ['auth']], function () {
 
     //docuemnt viewer
     Route::get('/submission', ['middleware' => ['permission:view articles and pictures'],'uses'=>"PageController@allSubmissions"])->name('allSubmissions');
+    Route::get('/submission/of/{year}', ['middleware' => ['permission:view articles and pictures'],'uses'=>"PageController@allSubmissions"]);
+
+    Route::get('/submission/selected', ['middleware' => ['permission:view selected articles'],'uses'=>"PageController@selectedSubmissions"])->name('selectedSubmissions');
+    Route::get('/submission/selected/of/{year}', ['middleware' => ['permission:view selected articles'],'uses'=>"PageController@selectedSubmissions"]);
+
+    Route::get('/submission/selected/of/{year}/download', ['middleware' => ['permission:download article'],'uses'=>"SubmissionController@downloadSelectedZip"])->name("downloadSelectedZip");
+
     Route::get('/submission/{submission_id}/view', ['middleware' => ['permission:view articles and pictures'],'uses'=>"PageController@submissionView"])->name('submissionView');
+
+    Route::get('/submission/{submission}/select', ['middleware' => ['permission:select articles for publication'],'uses'=>"SubmissionController@selectForPublication"])->name('selectForPublication');
+    Route::get('/submission/{submission}/unselect', ['middleware' => ['permission:select articles for publication'],'uses'=>"SubmissionController@unSelectForPublication"])->name('unSelectForPublication');
+
     Route::get('/document/load', ['middleware' => ['permission:view articles and pictures'],'uses'=>"ApiController@loadDocument"])->name('loadDocument');
     Route::get('/picture/{file}/load', ['middleware' => ['permission:view articles and pictures'],'uses'=>"ApiController@loadPicture"])->name('loadPicture');
     Route::get('/submission/{submission}/delete', ['middleware' => ['permission:modify articles and pictures'],'uses'=>"SubmissionController@deleteSubmission"])->name('deleteSubmission');
@@ -27,10 +38,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/faculty/{faculty}/view",['middleware' => ['permission:modify faculty'],'uses'=>"PageController@facultyDetails"])->name("facultyDetails");
     Route::post("/faculty/students/add",['middleware' => ['permission:modify faculty'],'uses'=>"FacultyController@addStudent"])->name("addStudent");
 
-//    Route::get('/users', "PageController@manageUsers")->name('manageUsers');
+    Route::get('/reports', "ApiController@homeReports")->name('homeReports');
 //    Route::post('/users/add', "UserController@addUser")->name('addUser');
 //    Route::get('/users/{id}/delete', "UserController@deleteUser")->name('deleteUser');
 //    Route::get('/users/{id}/role/{role}', "UserController@changeRole")->name('changeRole');
 //    Route::post('/users/update', "UserController@updateUser")->name('updateUser');
+
+
+    Route::get('sendhtmlemail','CommentsController@test');
+
 });
 

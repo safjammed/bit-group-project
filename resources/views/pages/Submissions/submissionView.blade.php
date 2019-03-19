@@ -52,13 +52,23 @@
                         <div class="m-b-1">
                             <div class="clearfix">
                                 @can("select articles for publication")
-                                    @if($status->status != "expired")
-                                        <button type="button" class="btn btn-success pull-right m-r-0-5 label-left waves-effect waves-light">
+                                    @if($status->status != "expired" && $status->status != "waiting" && $status->status != "selected")
+                                        <a href="{{route("selectForPublication",[$submission->id])}}" type="button" class="btn btn-success pull-right m-r-0-5 label-left waves-effect waves-light">
                                             <span class="btn-label"><i class="ti-pencil"></i></span>
                                             Select For Publication
-                                        </button>
+                                        </a>
                                     @endif
                                 @endcan
+
+
+                                    @can("unselect articles for publication")
+                                        @if($status->status != "expired" && $status->status != "waiting" && $status->status == "selected")
+                                            <a href="{{route("unSelectForPublication",[$submission->id])}}" type="button" class="btn btn-warning pull-right m-r-0-5 label-left waves-effect waves-light confirm">
+                                                <span class="btn-label"><i class="ti-pencil"></i></span>
+                                                Unselect For Publication
+                                            </a>
+                                        @endif
+                                    @endcan
 
 
                                 @can("modify articles and pictures")
@@ -69,7 +79,7 @@
 
                                 @can("modify articles and pictures")
                                     @if($status->status != "expired")
-                                        <button type="button" class="btn btn-outline-danger btn-icon pull-right m-r-0-5 confirm"><i class="ti-trash"></i></button>
+                                        <a href="{{route("deleteSubmission",[$submission->id])}}" class="btn btn-outline-danger btn-icon pull-right m-r-0-5 confirm"><i class="ti-trash"></i></a>
                                     @endif
                                 @endcan
                                 {{--<div class="btn-group pull-right" role="group">
@@ -99,6 +109,7 @@
                     </div>
                 </div>
             </div>
+    @if($status->status != "expired")
 
             <div class="box box-block bg-white">
                 <div class="row">
@@ -123,12 +134,12 @@
                                             </div>
                                             <div class="media-body">
                                                 <h6 class="media-heading">
-                                                    <a class="text-black" href="#">John Doe</a>
-                                                    <span class="font-90 text-muted">Marketing Coordinator</span>
+                                                    <a class="text-black" href="#">{{$comment->commenter->name}}</a>
+                                                    <span class="font-90 text-muted">{{($comment->commenter->getRoleNames())[0]}}</span>
                                                 </h6>
-                                                <span class="font-90 stream-meta">14 minute ago</span>
+                                                <span class="font-90 stream-meta">{{$comment->created_at->diffForHumans()}}</span>
                                                 <div class="stream-body">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae neque incidunt cumque, dolore eveniet porro asperiores itaque! Eligendi minus cupiditate molestiae praesentium, facilis, neque saepe, soluta sapiente aliquid modi sunt.</p>
+                                                    <p>{{$comment->content}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -136,33 +147,6 @@
 
                                 </tr>
                                 @endforeach
-
-                                {{--<tr>--}}
-                                    {{--<td>--}}
-                                        {{--<div class="media stream-item">--}}
-                                            {{--<div class="media-left">--}}
-                                                {{--<div class="avatar box-64">--}}
-                                                    {{--<img class="b-a-radius-circle" src="/img/student.png" alt="">--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                            {{--<div class="media-body">--}}
-                                                {{--<h6 class="media-heading">--}}
-                                                    {{--<a class="text-black" href="#">John Doe</a>--}}
-                                                    {{--<span class="font-90 text-muted">Marketing Coordinator</span>--}}
-                                                {{--</h6>--}}
-                                                {{--<span class="font-90 stream-meta">14 minute ago</span>--}}
-                                                {{--<div class="stream-body">--}}
-                                                    {{--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae neque incidunt cumque, dolore eveniet porro asperiores itaque! Eligendi minus cupiditate molestiae praesentium, facilis, neque saepe, soluta sapiente aliquid modi sunt.</p>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</td>--}}
-
-                                {{--</tr>--}}
-
-
-
-
                             </tbody>
                             <tfoot>
                             <tr>
@@ -195,6 +179,7 @@
                     </div>
                 </div>
             </div>
+        @endif
 
         </div>
     </div>

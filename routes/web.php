@@ -31,8 +31,8 @@ foreach (glob(__DIR__."/roles/*.php") as $filename)
     include_once $filename;
 }
 
-Auth::routes();
-
+//Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/code', 'Auth\LoginController@showCodeForm')->name("code");
 Route::post('/code', 'Auth\LoginController@storeCodeForm');
 
