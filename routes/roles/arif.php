@@ -1,2 +1,2 @@
 <?php
-Route::get('/faculties', 'FacultyController@index')->name('showFaculties');
+Route::get('/faculties_old', 'FacultyController@index')->name('showFacultiesold');

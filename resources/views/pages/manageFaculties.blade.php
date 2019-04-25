@@ -24,7 +24,7 @@
             <h4>Manage Users</h4>
             <ol class="breadcrumb no-bg m-b-1">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Manage Users</li>
+                <li class="breadcrumb-item active">Manage Faculties</li>
             </ol>
 
 
@@ -40,82 +40,43 @@
                 </div>
             @endif
 
-
-            <form method="POST" action="">
+            @can("add faculty")
+            <form method="POST" action="{{route("addFaculty")}}">
                 @csrf
                 <div class="box box-block bg-white">
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <h4>Add New Project Output Indicator</h4>
+                            <h4>Add New Faculty</h4>
                             <hr>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
+                        <label class="col-sm-2 col-form-label">Faculty Name</label>
                         <div class="col-sm-10">
                             <input id="name" placeholder="Name" type="text"
                                    class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
                                    value="{{ old('name') }}" required autofocus>
 
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Faculty Seats</label>
+                        <div class="col-sm-10">
+                            <input id="seats" placeholder="Seats" type="number" min="1" max="100"
+                                   class="form-control{{ $errors->has('seats') ? ' is-invalid' : '' }}" name="seats"
+                                   value="{{ old('seats') }}" required>
 
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Email</label>
+                        <label class="col-sm-2 col-form-label">Marketing Coordinator</label>
                         <div class="col-sm-10">
-                            <input id="email" placeholder="Email" type="email"
-                                   class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                                   value="{{ old('email') }}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Phone</label>
-                        <div class="col-sm-10">
-                            <input id="phone" type="text" class="tel-input auto form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone">
-                            <input type="hidden" name="country_code" value=""/>
-                        </div>
-                    </div>
-                    <fieldset class="form-group row">
-                        <div class="col-sm-8 offset-sm-2">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="two_factor" value="1" checked>
-                                    Turn On two factor Verification
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="two_factor" value="0">
-                                    Turn Off two factor Verification
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Password</label>
-                        <div class="col-sm-10">
-                            <input id="password" placeholder="Password" type="password"
-                                   class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                   name="password" required>
-
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Confirm Password</label>
-                        <div class="col-sm-10">
-                            <input id="password-confirm" placeholder="Confirm Password" type="password"
-                                   class="form-control" name="password_confirmation" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">User Role</label>
-                        <div class="col-sm-10">
-
-                            <select name="role" class="form-control" required data-plugin="select2">
-
+                            <select name="user_id" class="form-control" required data-plugin="select2">
+                                @foreach( $marketing_cos as $marketing_co)
+                                    <option value="{{$marketing_co->id}}">{{$marketing_co->name}}</option>
+                                @endforeach
                             </select>
 
                         </div>
@@ -131,32 +92,48 @@
                     </div>
                 </div>
             </form>
+            @endcan
 
             <div class="box box-block bg-white">
                 <div class="row">
                     <div class="col-md-12">
-                        <h5 class="m-b-1">Closure Dates</h5>
+                        <h5 class="m-b-1">Faculties</h5>
                         <table class="table table-hovertable-bordered dataTable" id="table-2">
                             <thead>
                             <tr>
-                                <th>Academic Year</th>
+                                <th>#</th>
                                 <th>Faculty Name</th>
-                                <th>Closure Date</th>
-                                <th>Final Closure Date</th>
+                                <th>Available Seats</th>
+                                <th>Marketing Coordinator</th>
                                 <th>actions</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($faculties as $index => $faculty)
+                            <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{$faculty->name}}</td>
+                                <td>{{$faculty->seats}}</td>
+                                <td>{{$faculty->marketingCoordinator->name}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        @can("modify faculty")
+                                        <button class="btn btn-primary edit-data waves-effect waves-light" data-toggle="modal" data-target=".default-modal" data-record="{{base64_encode(json_encode($faculty))}}"><i class="ti-pencil"></i></button>
+                                        <button class="btn btn-danger confirm waves-effect waves-light" data-url="{{ route("deleteFaculty",["faculty"=>$faculty->id]) }}" ><i class="ti-trash"></i></button>
+                                        @endcan
+                                        <a class="btn btn-success waves-effect waves-light" href="{{route("facultyDetails",$faculty->id)}}" >DETAILS</a>
 
-
-
+                                    </div>
+                                </td>
+                            </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Academic Year</th>
+                                <th>#</th>
                                 <th>Faculty Name</th>
-                                <th>Closure Date</th>
-                                <th>Final Closure Date</th>
+                                <th>Available Seats</th>
+                                <th>Marketing Coordinator</th>
                                 <th>actions</th>
                             </tr>
                             </tfoot>
@@ -166,9 +143,9 @@
             </div>
         </div>
     </div>
-
+    @can("modify faculty")
     <div class="modal fade default-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <form action="" method="POST">
+        <form action="{{route("updateFaculty")}}" method="POST">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -179,84 +156,42 @@
                     </div>
                     <div class="modal-body">
                         @csrf
-
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-md-12">
+                                <h4>Add New Faculty</h4>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Faculty Name</label>
                             <div class="col-sm-10">
-                                <input  placeholder="Name" type="text"
-                                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                        value="{{ old('name') }}" required autofocus>
-
+                                <input id="name" placeholder="Name" type="text"
+                                       class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
+                                       value="{{ old('name') }}" required autofocus>
 
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Email</label>
+                            <label class="col-sm-2 col-form-label">Faculty Seats</label>
                             <div class="col-sm-10">
-                                <input placeholder="Email" type="email"
-                                       class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                                       value="{{ old('email') }}" required>
-
-
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Phone</label>
-                            <div class="col-sm-10">
-                                <input type="text"
-                                       class="tel-input form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
-                                       name="phone">
-                                <input type="hidden" name="country_code" value=""/>
-                            </div>
-                        </div>
-                        <fieldset class="form-group row">
-                            <div class="col-sm-8 offset-sm-2">
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="two_factor" value="1" checked>
-                                        Turn On two factor Verification
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="two_factor" value="0">
-                                        Turn Off two factor Verification
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Update Password</label>
-                            <div class="col-sm-10">
-                                <input placeholder="Password" type="password"
-                                       class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                       name="password" >
-
-
+                                <input id="seats" placeholder="Seats" type="number" min="1" max="100"
+                                       class="form-control{{ $errors->has('seats') ? ' is-invalid' : '' }}" name="seats"
+                                       value="{{ old('seats') }}" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Confirm Password</label>
+                            <label class="col-sm-2 col-form-label">Marketing Coordinator</label>
                             <div class="col-sm-10">
-                                <input  placeholder="Confirm Password" type="password"
-                                        class="form-control" name="password_confirmation" >
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">User Role</label>
-                            <div class="col-sm-10">
-
-                                <select name="role" class="select2 w-100" required>
-
+                                <select name="user_id" class="form-control" required data-plugin="select2">
+                                    @foreach( $marketing_cos as $marketing_co)
+                                        <option value="{{$marketing_co->id}}">{{$marketing_co->name}}</option>
+                                    @endforeach
                                 </select>
 
                             </div>
                         </div>
-
-
                         <input type="hidden" name="id" value="">
                     </div>
                     <div class="modal-footer">
@@ -267,7 +202,7 @@
             </div>
         </form>
     </div>
-
+@endcan
 
 
 

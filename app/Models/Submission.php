@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Submission extends Model
 {
     protected $fillable = [
-        "name", "type", "user_id", "commented_at","selected"
+        "name", "type", "user_id", "commented_at","selected", "closure_id", "faculty_id"
     ];
 
     public function submitter(){
@@ -43,7 +43,7 @@ class Submission extends Model
         $closure_date = Carbon::createFromFormat("Y-m-d",$closure->closure);
         $final_closure = Carbon::createFromFormat("Y-m-d",$closure->final_closure);
         //if comment is made within 15 days
-        if ($comment_date != null && $comment_date->diffInDays($creation_date) < 15 && $final_closure->greaterThanOrEqualTo($comment_date) ){
+        if ($comment_date != null && $comment_date->diffInDays($creation_date,false) < 15 && $final_closure->greaterThanOrEqualTo($comment_date) ){
             $status = "approved";
         }else{
             $status = "expired";

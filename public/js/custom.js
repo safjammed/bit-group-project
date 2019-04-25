@@ -55,9 +55,9 @@ $(function(){
 
     /************************************
      *                                  *
-     *            SELECT 2              *
-     *                                  *
-     * *********************************/
+*            SELECT 2              *
+    *                                  *
+    * *********************************/
     if ($("[data-plugin='select2'], .select2").length >= 1){
         $("head").prepend('<link rel="stylesheet" href="/vendor/select2/dist/css/select2.min.css">\n');
         $.getScript("/vendor/select2/dist/js/select2.min.js").done(function (resp) {
@@ -65,6 +65,16 @@ $(function(){
         })
 
 
+    }
+
+    /************************************
+     *                                  *
+     *            SELECT 2              *
+     *                                  *
+     * *********************************/
+    if ($("[data-plugin='dropify'], .dropify").length >= 1) {
+
+        $('.dropify').dropify();
     }
 
 

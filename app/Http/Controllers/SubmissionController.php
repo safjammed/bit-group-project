@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\extras\Mailer;
 use App\Models\Closure;
+use App\Models\Faculty;
 use App\Models\Submission;
 use Carbon\Carbon;
 use Chumper\Zipper\Zipper;
@@ -153,5 +155,78 @@ class SubmissionController extends Controller
         }
         $zipper->close();
         return response()->download($zipFile);
+    }
+
+    public function addSubmission(Request $request)
+    {
+        //validate the request
+        $request->validate([
+            'agree'=>'required',
+            'upload' => 'required|mimes:doc,docx,pdf,png,jpg,gif',
+            'faculty_id'=>'required|numeric',
+        ]);
+        $document_mime = ['doc', 'docx', 'pdf'];
+        $images_mime = ['png', 'jpg', 'gif'];
+        $file = $request->file('upload');
+        $filetype = $file->getClientOriginalExtension();
+
+        $faculty = Faculty::findOrFail($request->input("faculty_id"));
+
+        //check Status
+        $closure = Closure::where("academic_year",date("Y") )
+            ->where("faculty_id", $request->input("faculty_id"))
+            ->first();
+        $closure_date = Carbon::createFromFormat("Y-m-d",$closure->closure);
+//        $final_closure = Carbon::createFromFormat("Y-m-d",$closure->final_closure);
+        $now = Carbon::now();
+        if ($now->diffInDays($closure_date, false) < 15 ){
+            // upload process starts here
+            if(in_array($filetype,$document_mime)){
+                $type = "document";
+            }elseif(in_array($filetype,$images_mime)){
+                $type =  "picture";
+            }
+            //save file
+            $filename = time().$file->getClientOriginalName();
+            if ($file->move(public_path("uploads/submissions"), $filename)){
+                //file uploaded entry in database
+                /*$statement = Submission::create([
+                    "name"=> $filename,
+                    "type" => $type,
+                    "user_id" => Auth::id()
+                ]);*/
+                $submission = new Submission();
+                $submission->name = $filename;
+                $submission->type = $type;
+                $submission->closure_id = $closure->id;
+                $submission->faculty_id = $faculty->id;
+                $submission->user_id = Auth::id();
+
+                if ($submission->save()){
+                    //all done send mail to marketing coordinator and show success
+
+                    //send mail to MCO
+                    $to = $faculty->marketingCoordinator->email;
+                    $subject = "New submission has been uploaded";
+                    $body = "A student of $faculty->name faculty has uploaded a new submission please review the submission by clicking the link below";
+                    $link = route("submissionView",$submission->id);
+                    $mailer = new Mailer();
+                    $mailer->sendMail($to, $subject, $subject, $body,[
+                            "link" => $link,
+                            "text" => "View Submission"
+                        ]);
+
+                    return redirect()->route("allSubmissions")->with("success","The file has been uploaded");
+                }
+            }else{
+                return redirect()->route("allSubmissions")->with("error", " Could not upload, may be a misconfigured server or lack of permissions");
+            }
+
+
+
+
+        }else{
+            return redirect()->route("allSubmissions")->with("error", " Last date of upload has passed. You are $now->diffInDays($closure_date) days late");
+        }
     }
 }

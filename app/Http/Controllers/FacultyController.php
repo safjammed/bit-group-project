@@ -39,60 +39,23 @@ class FacultyController extends Controller
         //Validation check
         $this->validate($request,[
             'name'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required|min:11',
-            'faculty'=>'required'
+            'seats'=>'required|min:1|max:100',
+            'user_id'=>'required|numeric',
         ]);
-        $name = $request->name; // $_POST['full_name']
-        $email = $request->email;
-        $phone = $request->phone;
-        $faculty = $request->faculty;
 
         // store the data into database
-        $facul=new Faculty();
-        $facul->name=$name;
-        $facul->email=$email;
-        $facul->phone=$phone;
-        $facul->faculty=$faculty;
-        $facul->save();
-        //dd($message) // for debugging
-        Session::flash("success_done","Successfully Data Inserted");
-        return redirect()->back();
-        
-        $data = [
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'faculty' => $request['faculty']
-        ];
-        Faculty::create($data);
-        return redirect()->back();
-    }
+        $statement = Faculty::create([
+            "name" => $request->input("name"),
+            "seats" => $request->input("seats"),
+            "user_id" => $request->input("user_id"),
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $faculty=Faculty::find($id);
-        return $faculty;
+        if ($statement){
+            return redirect()->route("showFaculties")->with("success",$request->input("name")." has been added");
+        }else{
+            return redirect()->route("showFaculties")->with("error",$request->input("name")." could not be added ");
+        }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $faculty=Faculty::find($id);
-        return $faculty;
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -100,15 +63,18 @@ class FacultyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $faculty = Faculty::find($id);
+        $id= $request->input("id");
+        $faculty = Faculty::findOrFail($id);
         $faculty->name=$request['name'];
-        $faculty->email=$request['email'];
-        $faculty->phone=$request['phone'];
-        $faculty->faculty=$request['faculty'];
-        $faculty->save();
-        return $faculty;
+        $faculty->seats=$request['seats'];
+        $faculty->user_id=$request['user_id'];
+        if ($faculty->save()){
+            return redirect()->route("showFaculties")->with("success",$request->input("name")." has been updated");
+        }else{
+            return redirect()->route("showFaculties")->with("error",$request->input("name")." could not be updated ");
+        }
     }
 
     /**
@@ -119,7 +85,11 @@ class FacultyController extends Controller
      */
     public function destroy($id)
     {
-        Faculty::destroy($id);
+        if (Faculty::destroy($id)){
+            return redirect()->route("showFaculties")->with("success","The faculty is no more");
+        }else{
+            return redirect()->route("showFaculties")->with("error","The faulty is too tough or error. Cuz couldn't delete it");
+        }
     }
 
     //Read all data by json formate

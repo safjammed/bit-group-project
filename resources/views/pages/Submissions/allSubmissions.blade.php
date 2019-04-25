@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/vendor/DataTables/Responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/vendor/DataTables/Buttons/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="/vendor/DataTables/Buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/vendor/dropify/dist/css/dropify.min.css">
     <style>
         .fake-row::before {
             content: "";
@@ -41,38 +42,38 @@
             @endif
 
             @can('add article and pictures')
-            <form method="POST" action="">
+            <form method="POST" action="{{route("addSubmission")}}" enctype="multipart/form-data">
                 @csrf
                 <div class="box box-block bg-white">
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <h4>Add New Project Output Indicator</h4>
+                            <h4>Upload New Articles </h4>
                             <hr>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
+                        <label class="col-sm-2 col-form-label">Faculty</label>
                         <div class="col-sm-10">
-                            <input id="name" placeholder="Name" type="text"
-                                   class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                   value="{{ old('name') }}" required autofocus>
-
-
+                            <select name="faculty_id" class="form-control" required data-plugin="select2">
+                                @foreach( $faculties as $faculty)
+                                    <option value="{{$faculty->id}}">{{$faculty->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">File</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="dropify" name="upload" required accept=".doc,.docx,.pdf,.jpg,.png,.jpeg" />
+                            <p class="text-info">* Max upload limit of this server is {{ini_get('post_max_size')}} and JPG,PNG,DOCX,DOC or PDF files are accepted</p>
                         </div>
                     </div>
                     <fieldset class="form-group row">
                         <div class="col-sm-8 offset-sm-2">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="two_factor" value="1" checked>
-                                    Turn On two factor Verification
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="two_factor" value="0">
-                                    Turn Off two factor Verification
-                                </label>
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="agree" required checked />
+                                <label class="form-check-label">I agree to terms and conditions </label>
                             </div>
                         </div>
                     </fieldset>
@@ -194,6 +195,8 @@
     <script type="text/javascript" src="/js/tables-datatable.js"></script>
     <script type="text/javascript" src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="{{asset("/vendor/select2/dist/js/select2.min.js")}}"></script>
+    <script type="text/javascript" src="{{asset("/vendor/dropify/dist/js/dropify.min.js")}}"></script>
+
     <script>
         $(function () {
             $("#academic_year").change(function (e) {

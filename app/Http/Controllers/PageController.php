@@ -69,8 +69,12 @@ class PageController extends Controller
         $closure = Closure::where("academic_year",$year)->pluck("id");
         $academic_years = Closure::distinct("academic_year")->pluck("academic_year");
         $user = Auth::user();
-        if ($user->hasRole('super-admin')== false && $user->can('add articles and pictures')){ //if a student
+        $faculties = Faculty::all();
+//        dd($user->can('add article and pictures'));
+        if ($user->hasRole('super-admin')== false && $user->can('add article and pictures')){ //if a student
+//            return "i am student";
             $submissions = Submission::where("user_id", $user->id)->whereIN("closure_id",$closure)->get();
+            $faculties = Auth::user()->faculty()->get();
         }else{
             $submissions = Submission::whereIN("closure_id",$closure)->get();
         }
@@ -78,7 +82,8 @@ class PageController extends Controller
         return view("pages.Submissions.allSubmissions",[
             "submissions" => $submissions,
             "academic_years" => $academic_years,
-            "showing_year" => $year
+            "showing_year" => $year,
+            "faculties" => $faculties
         ]);
     }
     public function selectedSubmissions($year = false ){
@@ -129,4 +134,12 @@ class PageController extends Controller
             "faculty" => $faculty
         ]);
     }
+    public function allFaculties()
+    {
+        return view("pages.manageFaculties",[
+            "marketing_cos" => User::role('marketing coordinator')->get(),
+            "faculties" => Faculty::all()
+        ]);
+    }
+
 }
