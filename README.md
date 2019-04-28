@@ -47,7 +47,7 @@ Arifujjaman Firoj [http://github.com/ITArif]
  
 ##### **Database designer**
 
-Meherab Dipro [http://github.com/ITArif]
+Meherab Dipro [http://github.com/2mdipro7]
 
   
   
