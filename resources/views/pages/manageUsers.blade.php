@@ -46,7 +46,7 @@
                 <div class="box box-block bg-white">
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <h4>Add New Project Output Indicator</h4>
+                            <h4>Add New User</h4>
                             <hr>
                         </div>
                     </div>

@@ -31,7 +31,7 @@ class Submission extends Model
         $closure = Closure::where("academic_year",date("Y") )
             ->where("faculty_id", $submission->faculty_id)
             ->first();
-
+        $updatable =false;
 
 
         $creation_date = Carbon::createFromFormat('Y-m-d H:s:i', $submission->created_at);
