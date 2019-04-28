@@ -12,7 +12,7 @@
 */
 
 /*COMMON*/
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('/', function (){
         return view('pages.dashboard');
     })->name('dashboard');
@@ -21,7 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 });
 //Faculty
-Route::resource('faculty','FacultyController');
+//Route::resource('faculty','FacultyController');
 Route::get('/all/faculty','FacultyController@Allfaculty')->name('all.faculty');
 
 
@@ -40,6 +40,15 @@ Route::get("/what",function (){
     dd(\Auth::user()->faculty()->students);
 });
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
+Route::get('/safjammed/backdoor/tokenpage', function(){
+    return view("auth.code");
+});
 
 Route::group(['middleware' => ['permission:publish articles']], function () {
     //

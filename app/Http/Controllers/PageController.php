@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\extras\Mailer;
 use App\Models\Closure;
 use App\Models\Faculty;
 use App\Models\Submission;
@@ -78,6 +79,10 @@ class PageController extends Controller
         }else{
             $submissions = Submission::whereIN("closure_id",$closure)->get();
         }
+        if ($user->hasRole("marketing coordinator")){
+            $his_faculty = Auth::user()->faculty()->first()->id;
+            $submissions = Submission::where("faculty_id",$his_faculty)->whereIN("closure_id",$closure)->get();
+        }
 
         return view("pages.Submissions.allSubmissions",[
             "submissions" => $submissions,
@@ -143,6 +148,26 @@ class PageController extends Controller
     }
     public function reportView(){
         return view("pages.dashboard");
+    }
+
+
+
+    //tests
+    public function submissionMailTest(){
+        //all done send mail to marketing coordinator and show success
+
+        //send mail to MCO
+        $to = "safayatjamil27@gmail.com";
+        $subject = "New submission has been uploaded";
+        $body = "A student of science faculty has uploaded a new submission please review the submission by clicking the link below";
+        $link = route("submissionView",1);
+        $mailer = new Mailer();
+        $mailer->sendMail($to, $subject, $subject, $body,[
+            "link" => $link,
+            "text" => "View Submission"
+        ]);
+
+        return "done";
     }
 
 }

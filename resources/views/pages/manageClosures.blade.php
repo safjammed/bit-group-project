@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/vendor/DataTables/Responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/vendor/DataTables/Buttons/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="/vendor/DataTables/Buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+
     <style>
         .fake-row::before {
             content: "";
@@ -21,10 +23,10 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <h4>Manage Users</h4>
+            <h4>Manage Closures</h4>
             <ol class="breadcrumb no-bg m-b-1">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Manage Users</li>
+                <li class="breadcrumb-item active">Manage Closures</li>
             </ol>
 
 
@@ -40,92 +42,47 @@
                 </div>
             @endif
 
-
-            <form method="POST" action="{{ route('addUser') }}">
+            <form method="POST" action="{{ route('addUpdateClosure') }}">
                 @csrf
                 <div class="box box-block bg-white">
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <h4>Add New Project Output Indicator</h4>
+                            <h4>Add / Update closures</h4>
                             <hr>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
+                        <label class="col-sm-2 col-form-label">Acamdeic Year</label>
                         <div class="col-sm-10">
-                            <input id="name" placeholder="Name" type="text"
-                                   class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                   value="{{ old('name') }}" required autofocus>
-
-
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input id="email" placeholder="Email" type="email"
-                                   class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                                   value="{{ old('email') }}" required>
+                            <p> <b>{{date("Y")}} </b></p>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Phone</label>
+                        <label class="col-sm-2 col-form-label">Closure</label>
                         <div class="col-sm-10">
-                            <input id="phone" type="text" class="tel-input auto form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone">
-                            <input type="hidden" name="country_code" value=""/>
-                        </div>
-                    </div>
-                    <fieldset class="form-group row">
-                        <div class="col-sm-8 offset-sm-2">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="two_factor" value="1" checked>
-                                    Turn On two factor Verification
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="two_factor" value="0">
-                                    Turn Off two factor Verification
-                                </label>
+                            <div class="input-daterange input-group" id="date-range">
+                                <input type="text" class="form-control" name="closure" readonly required data-format="yyyy-mm-dd">
+                                <span class="input-group-addon bg-primary b-0 text-white">to</span>
+                                <input type="text" class="form-control" name="final_closure" readonly required data-format="yyyy-mm-dd">
                             </div>
                         </div>
-                    </fieldset>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Password</label>
-                        <div class="col-sm-10">
-                            <input id="password" placeholder="Password" type="password"
-                                   class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                   name="password" required>
-
-                        </div>
                     </div>
 
-
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Confirm Password</label>
+                        <label class="col-sm-2 col-form-label">Faculty</label>
                         <div class="col-sm-10">
-                            <input id="password-confirm" placeholder="Confirm Password" type="password"
-                                   class="form-control" name="password_confirmation" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">User Role</label>
-                        <div class="col-sm-10">
-
-                            <select name="role" class="form-control" required data-plugin="select2">
-
+                            <select name="faculty_id" class="form-control" required data-plugin="select2">
+                                @foreach($faculties as $index => $faculty)
+                                    <option value="{{$faculty->id}}">{{$faculty->name}}</option>
+                                @endforeach
                             </select>
 
                         </div>
                     </div>
-
-
                     <div class="form-group row">
                         <div class="col-sm-2 offset-md-4">
                             <button type="submit" class="btn btn-info btn-block py-2">
-                                <strong>Create</strong>
+                                <strong>Submit</strong>
                             </button>
                         </div>
                     </div>
@@ -154,9 +111,11 @@
                                     <td>{{$closure->closure}}</td>
                                     <td>{{$closure->final_closure}}</td>
                                     <td>
+                                        @if($closure->academic_year == date("Y"))
                                         <div class="btn-group">
                                             <button class="btn btn-primary edit-data waves-effect waves-light" data-toggle="modal" data-target=".default-modal" data-record="{{base64_encode(json_encode($closure))}}"><i class="ti-pencil"></i> Edit</button>
                                         </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -181,7 +140,7 @@
     </div>
 
     <div class="modal fade default-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <form action="" method="POST">
+        <form action="{{ route('addUpdateClosure') }}" method="POST">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -194,76 +153,29 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Name</label>
+                            <label class="col-sm-2 col-form-label">Acamdeic Year</label>
                             <div class="col-sm-10">
-                                <input  placeholder="Name" type="text"
-                                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                        value="{{ old('name') }}" required autofocus>
-
-
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
-                                <input placeholder="Email" type="email"
-                                       class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                                       value="{{ old('email') }}" required>
-
-
+                                <input value="" name="academic_year" class="form-control" readonly/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Phone</label>
+                            <label class="col-sm-2 col-form-label">Closure</label>
                             <div class="col-sm-10">
-                                <input type="text"
-                                       class="tel-input form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
-                                       name="phone">
-                                <input type="hidden" name="country_code" value=""/>
-                            </div>
-                        </div>
-                        <fieldset class="form-group row">
-                            <div class="col-sm-8 offset-sm-2">
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="two_factor" value="1" checked>
-                                        Turn On two factor Verification
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="two_factor" value="0">
-                                        Turn Off two factor Verification
-                                    </label>
+                                <div class="input-daterange input-group" id="date-range">
+                                    <input type="text" class="form-control" name="closure" readonly required data-format="yyyy-mm-dd">
+                                    <span class="input-group-addon bg-primary b-0 text-white">to</span>
+                                    <input type="text" class="form-control" name="final_closure" readonly required data-format="yyyy-mm-dd">
                                 </div>
                             </div>
-                        </fieldset>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Update Password</label>
-                            <div class="col-sm-10">
-                                <input placeholder="Password" type="password"
-                                       class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                       name="password" >
-
-
-                            </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Confirm Password</label>
+                            <label class="col-sm-2 col-form-label">Faculty</label>
                             <div class="col-sm-10">
-                                <input  placeholder="Confirm Password" type="password"
-                                        class="form-control" name="password_confirmation" >
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">User Role</label>
-                            <div class="col-sm-10">
-
-                                <select name="role" class="select2 w-100" required>
-
+                                <select name="faculty_id" class="form-control" required data-plugin="select2">
+                                    @foreach($faculties as $index => $faculty)
+                                        <option value="{{$faculty->id}}">{{$faculty->name}}</option>
+                                    @endforeach
                                 </select>
 
                             </div>
@@ -305,6 +217,7 @@
     <script type="text/javascript" src="/js/tables-datatable.js"></script>
     <script type="text/javascript" src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="{{asset("/vendor/select2/dist/js/select2.min.js")}}"></script>
+
     <script type="text/javascript">
         $(function () {
             $(document).on("click", ".edit-data", function () {
@@ -348,6 +261,13 @@
                 $(".permission-modal [name='user_id']").val(userId);
                 console.log(permissions);
             });
+
+            //datepicker
+            $('.datepicker').datepicker()
+            $('.input-daterange').datepicker({
+                toggleActive: true
+            });
+
 
         });
     </script>

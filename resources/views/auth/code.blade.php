@@ -19,7 +19,9 @@
             <form method="POST" action="{{ route('code') }}">
                 @csrf
                 <div class="form-group">
+                    <p class="text-center">a code has been sent to your phone. please write it here</p>
                     <div class="input-group">
+
                         <input id="code" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="code" value="{{ old('code') }}" required autofocus placeholder="4 Digit Code">
 
                         @if ($errors->has('code'))

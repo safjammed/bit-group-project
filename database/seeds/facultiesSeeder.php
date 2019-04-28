@@ -27,6 +27,7 @@ class facultiesSeeder extends Seeder
                 "name"=> $faculties[$index],
                 "user_id" => $mco->id
             ]);
+
         }
     }
 }

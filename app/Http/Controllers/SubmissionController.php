@@ -162,10 +162,10 @@ class SubmissionController extends Controller
         //validate the request
         $request->validate([
             'agree'=>'required',
-            'upload' => 'required|mimes:doc,docx,pdf,png,jpg,gif',
+            'upload' => 'required|mimes:doc,docx,png,jpg,gif',
             'faculty_id'=>'required|numeric',
         ]);
-        $document_mime = ['doc', 'docx', 'pdf'];
+        $document_mime = ['doc', 'docx'];
         $images_mime = ['png', 'jpg', 'gif'];
         $file = $request->file('upload');
         $filetype = $file->getClientOriginalExtension();

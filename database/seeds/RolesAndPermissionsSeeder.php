@@ -70,9 +70,7 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
 
         Role::create(['name' => 'marketing coordinator'])->givePermissionTo([
-            'download article',
             'view faculties',
-            'view selected articles',
             'select articles for publication',
             'unselect articles for publication',
             'contact faculty student',
@@ -86,9 +84,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'view faculties',
             'view faculty details',
             'view selected articles',
-            'select articles for publication',
+//            'select articles for publication',
             'contact faculty student',
-            'view report'
+            'view report',
         ]);
         Role::create(['name' => 'guest'])->givePermissionTo([
             'view faculties',

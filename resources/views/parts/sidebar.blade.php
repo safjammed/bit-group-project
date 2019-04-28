@@ -48,7 +48,7 @@
                 </a>
             </li>
             @endcan
-            @can("modify faculties")
+            @can("modify faculty")
             <li>
                 <a href="{{route("showFaculties")}}" class="waves-effect  waves-light">
                     <span class="s-icon"><i class="ti-agenda"></i></span>

@@ -18,7 +18,12 @@
                         {{ __('If you did not receive the email') }}</p>
                 </div>
                     <a href="{{ route('verification.resend') }}" class="btn btn-purple btn-block text-uppercase">{{ __('click here to request another') }}</a>
+                    <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="btn btn-danger btn-block text-uppercase">{{ __('LOGOUT') }}</a>
             </div>
         </div>
     </div>
+
+    <form id="logout-form" action="{{route("logout")}}" method="POST" style="display: none;">
+        @csrf
+    </form>
 @endsection

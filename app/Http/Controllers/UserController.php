@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -36,8 +37,8 @@ class UserController extends Controller
             'country_code' => $countryCode,
             'two_factor' => ($request->input('two_factor') == "0" ? false : true),
             'password' => Hash::make($request->input('password')),
+            "email_verified_at" => Carbon::now()
         ])->assignRole($rolename);
-
         if ($statement){
             return redirect()->route("manageUsers")->with("success",$request->input("name")." has been added");
         }else{

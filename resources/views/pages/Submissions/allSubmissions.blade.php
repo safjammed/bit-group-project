@@ -64,8 +64,8 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">File</label>
                         <div class="col-sm-10">
-                            <input type="file" class="dropify" name="upload" required accept=".doc,.docx,.pdf,.jpg,.png,.jpeg" />
-                            <p class="text-info">* Max upload limit of this server is {{ini_get('post_max_size')}} and JPG,PNG,DOCX,DOC or PDF files are accepted</p>
+                            <input type="file" class="dropify" name="upload" required accept=".doc,.docx,.jpg,.png,.jpeg" />
+                            <p class="text-info">* Max upload limit of this server is {{ini_get('post_max_size')}} and JPG,PNG,DOCX or DOC  files are accepted</p>
                         </div>
                     </div>
                     <fieldset class="form-group row">

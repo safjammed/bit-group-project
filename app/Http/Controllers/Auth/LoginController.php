@@ -28,7 +28,7 @@ class LoginController extends Controller
     /**
      * Set how many seconds a lockout will last.
      */
-    public $decayMinutes = 1;
+    public $decayMinutes = 15;
 
     use AuthenticatesUsers;
 
