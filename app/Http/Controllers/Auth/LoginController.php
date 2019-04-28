@@ -23,7 +23,7 @@ class LoginController extends Controller
     /**
      * Set how many failed logins are allowed before being locked out.
      */
-    public $maxAttempts = 1000;
+    public $maxAttempts = 3;
 
     /**
      * Set how many seconds a lockout will last.

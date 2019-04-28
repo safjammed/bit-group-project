@@ -3,6 +3,7 @@
 @section('extra_css')@endsection
 
 @section('content')
+    @if(Auth::user()->can('view report'))
     <div class="row row-md">
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <div class="box box-block bg-white tile tile-1 m-b-2">
@@ -82,6 +83,16 @@
             </div>
         </div>
     </div>
+        @else
+        <div class="row row-md">
+            <div class="col-md-12">
+                <div class="box box-block bg-white">
+                    <h1>Welcome back, {{Auth::user()->name}}</h1>
+                    <p>Please follow the sidebar for navigation</p>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 
 @section("dialoges")

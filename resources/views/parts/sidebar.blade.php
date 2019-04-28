@@ -36,7 +36,7 @@
             <li>
                 <a href="{{route("manageUsers")}}" class="waves-effect  waves-light">
                     <span class="s-icon"><i class=" ti-user"></i></span>
-                    <span class="s-text">Manage Users</span>
+                    <span class="s-text">Users</span>
                 </a>
             </li>
             @endcan
@@ -44,15 +44,15 @@
             <li>
                 <a href="{{route("manageClosures")}}" class="waves-effect  waves-light">
                     <span class="s-icon"><i class="ti-alarm-clock"></i></span>
-                    <span class="s-text">Manage Closures</span>
+                    <span class="s-text">Closures</span>
                 </a>
             </li>
             @endcan
-            @can("view faculties")
+            @can("modify faculties")
             <li>
                 <a href="{{route("showFaculties")}}" class="waves-effect  waves-light">
                     <span class="s-icon"><i class="ti-agenda"></i></span>
-                    <span class="s-text">Manage Faculties</span>
+                    <span class="s-text">Faculties</span>
                 </a>
             </li>
             @endcan
@@ -70,6 +70,16 @@
 
 
             <li class="menu-title">More</li>
+            @can('view report')
+                <li>
+                    <a href="{{route("reportView")}}" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="ti-face-smile"></i></span>
+                        <span class="s-text">Reports</span>
+                    </a>
+                </li>
+            @endcan
+
+
             <li class="compact-hide hidden">
                 <div id="sidebar-chart" class="chartist-animated chartist-light"></div>
             </li>

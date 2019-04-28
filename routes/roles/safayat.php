@@ -36,15 +36,16 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get("/faculty_students",['middleware' => ['permission:modify faculty'],'uses'=>"PageController@facultyStudents"])->name("facultyStudents");
     Route::get("/faculty/{faculty}/students/{user}/delete",['middleware' => ['permission:modify faculty'],'uses'=>"FacultyController@deleteStudent"])->name("deleteStudent");
-    Route::get("/faculty/{faculty}/view",['middleware' => ['permission:modify faculty'],'uses'=>"PageController@facultyDetails"])->name("facultyDetails");
+    Route::get("/faculty/{faculty}/view",['middleware' => ['permission:view faculty'],'uses'=>"PageController@facultyDetails"])->name("facultyDetails");
     Route::get("/faculty/{faculty}",['middleware' => ['permission:modify faculty'],'uses'=>"PageController@facultyDetails"]);
     Route::post("/faculty/students/add",['middleware' => ['permission:modify faculty'],'uses'=>"FacultyController@addStudent"])->name("addStudent");
 
-    Route::get('/reports', "ApiController@homeReports")->name('homeReports');
+    Route::get('/reports', ['middleware' => ['permission:view report'],'uses'=>'ApiController@homeReports'])->name('homeReports');
     Route::get('/faculty', ['middleware' => ['permission:view faculties'],'uses'=>'PageController@allFaculties'])->name('showFaculties');
     Route::post("/faculty/add",['middleware' => ['permission:add faculty'],'uses'=>"FacultyController@store"])->name("addFaculty");
     Route::get("/faculty/{faculty}/delete",['middleware' => ['permission:modify faculty'],'uses'=>"FacultyController@destroy"])->name("deleteFaculty");
     Route::post("/faculty/update",['middleware' => ['permission:modify faculty'],'uses'=>"FacultyController@update"])->name("updateFaculty");
+    Route::get("/show/reports",['middleware' => ['permission:view report'],'uses'=>"PageController@reportView"])->name("reportView");
 
 //    Route::post('/users/add', "UserController@addUser")->name('addUser');
 //    Route::get('/users/{id}/delete', "UserController@deleteUser")->name('deleteUser');

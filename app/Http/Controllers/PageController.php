@@ -141,5 +141,8 @@ class PageController extends Controller
             "faculties" => Faculty::all()
         ]);
     }
+    public function reportView(){
+        return view("pages.dashboard");
+    }
 
 }
