@@ -80,7 +80,9 @@ class PageController extends Controller
             $submissions = Submission::whereIN("closure_id",$closure)->get();
         }
         if ($user->hasRole("marketing coordinator")){
-            $his_faculty = Auth::user()->faculty()->first()->id;
+//            return "marketing co";
+            $his_faculty = Auth::user()->faculty()->id;
+//            dd($his_faculty);
             $submissions = Submission::where("faculty_id",$his_faculty)->whereIN("closure_id",$closure)->get();
         }
 

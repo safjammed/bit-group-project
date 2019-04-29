@@ -60,7 +60,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Closure</label>
                         <div class="col-sm-10">
-                            <div class="input-daterange input-group" id="date-range">
+                            <div class="input-daterange input-group" >
                                 <input type="text" class="form-control" name="closure" readonly required data-format="yyyy-mm-dd">
                                 <span class="input-group-addon bg-primary b-0 text-white">to</span>
                                 <input type="text" class="form-control" name="final_closure" readonly required data-format="yyyy-mm-dd">
@@ -263,9 +263,10 @@
             });
 
             //datepicker
-            $('.datepicker').datepicker()
+            $('.datepicker').datepicker();
             $('.input-daterange').datepicker({
-                toggleActive: true
+                toggleActive: true,
+                format:"yyyy-mm-dd"
             });
 
 
