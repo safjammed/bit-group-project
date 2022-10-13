@@ -18,7 +18,8 @@ class CreateImagesTable extends Migration
             $table->string('image_name');
             $table->text('image');
             $table->string('image_url');
-            $table->integer('student_id');
+            $table->unsignedInteger('student_id');
+            $table->foreign('student_id')->references('student_id')->on('student')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

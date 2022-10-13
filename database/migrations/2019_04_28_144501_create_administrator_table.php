@@ -15,7 +15,8 @@ class CreateAdministratorTable extends Migration
     {
         Schema::create('administrator', function (Blueprint $table) {
             $table->increments('admin_id');
-            $table->integer("user_id");
+            $table->unsignedInteger("user_id");
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

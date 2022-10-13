@@ -16,7 +16,8 @@ class CreateNotifiedCoordinatorTable extends Migration
         Schema::create('notified_coordinator', function (Blueprint $table) {
             $table->increments('notified_coordinator');
             $table->integer('faculty_member_id');
-            $table->integer('notification_id');
+            $table->unsignedInteger('notification_id');
+            $table->foreign('notification_id')->references('notification_id')->on('email_notification')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

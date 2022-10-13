@@ -15,9 +15,10 @@ class CreateTermsAgreedTable extends Migration
     {
         Schema::create('terms_agreed', function (Blueprint $table) {
             $table->increments('terms_student_id');
-            $table->integer('student_id');
-            $table->integer('terms_id');
-
+            $table->unsignedInteger('student_id');
+            $table->unsignedInteger('terms_id');
+            $table->foreign('student_id')->references('student_id')->on('student')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('terms_id')->references('id')->on('terms')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
