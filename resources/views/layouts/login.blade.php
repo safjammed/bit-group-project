@@ -11,7 +11,7 @@
 
 <div class="auth">
     <div class="auth-header">
-        <h1>ScriptLauncher</h1>
+        <h1>{{config('app.name')}}</h1>
         <h6>Welcome! Sign in to access the admin panel</h6>
     </div>
     <div class="container-fluid">

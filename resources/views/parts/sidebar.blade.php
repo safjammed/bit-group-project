@@ -2,7 +2,7 @@
 <div class="site-sidebar-overlay"></div>
 <div class="site-sidebar">
     <a class="logo" href="/">
-        <span class="l-text">ScriptLauncher</span>
+        <span class="l-text">{{config('app.name')}}</span>
         <span class="l-icon"></span>
     </a>
     <div class="custom-scroll custom-scroll-light">

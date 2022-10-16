@@ -104,7 +104,7 @@
                                                         <th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                 <tbody><tr>
-                                                                    <td class="text-nav righten m-center" style="color:#1d2025;font-family:'Barlow Condensed', Arial,sans-serif;font-size:16px;line-height:26px;text-align: center;"><a href="#" target="_blank" class="link-4" style="color:#1d2025; text-decoration:none;"><h3 class="link-4" style="color:#1d2025; text-decoration:none;">ScriptLauncher</h3></a>
+                                                                    <td class="text-nav righten m-center" style="color:#1d2025;font-family:'Barlow Condensed', Arial,sans-serif;font-size:16px;line-height:26px;text-align: center;"><a href="#" target="_blank" class="link-4" style="color:#1d2025; text-decoration:none;"><h3 class="link-4" style="color:#1d2025; text-decoration:none;">{{config('app.name')}}</h3></a>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody></table>
@@ -227,12 +227,12 @@
                                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                 <tbody><tr>
                                                                     <td class="text-footer righten m-center" style="color:#97999b;font-family:'Quicksand', Arial,sans-serif;font-size:12px;line-height:24px;text-align: center;">
-                                                                        <h4 class="link-2" style="color:#97999b; text-decoration:none;">ScriptLauncher</h4>
+                                                                        <h4 class="link-2" style="color:#97999b; text-decoration:none;">{{config('app.name')}}</h4>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="text-footer m-center" style="color:#97999b;font-family:'Quicksand', Arial,sans-serif;font-size:12px;line-height:24px;text-align: center;">
-                                                                        © {{date("Y")}} ScriptLauncher. All Rights Reserved.
+                                                                        © {{date("Y")}} {{config('app.name')}}. All Rights Reserved.
                                                                     </td>
                                                                 </tr>
                                                                 </tbody></table>

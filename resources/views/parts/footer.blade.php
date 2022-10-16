@@ -1,5 +1,5 @@
 <footer class="footer">
     <div class="container-fluid">
-        {{date("Y")}} © ScriptLauncher
+        {{date("Y")}} © {{config('app.name')}}
     </div>
 </footer>

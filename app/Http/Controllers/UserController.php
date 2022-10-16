@@ -60,7 +60,7 @@ class UserController extends Controller
         $countryCode = str_replace($phone,"",$phone_withintl);
         if ($request->input('country_code') != ""){
             $countryCode =$request->input('country_code');
-            $phone = str_replace($countryCode,"", $phone_withintl);
+            $phone = str_replace($countryCode,"", $phone_withintl?:$phone);
         }
 
         $updater =[
@@ -70,6 +70,7 @@ class UserController extends Controller
             'country_code' => $countryCode,
             'two_factor' => $request->input('two_factor'),
         ];
+//        dd($updater);
         if ($request->has("password") && ($request->input("password") != "" || $request->input("password") != null)  ){
             $updater['password'] = Hash::make($request->input('password'));
             $validation['password'] =['string', 'min:3', 'confirmed'];

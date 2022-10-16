@@ -70,6 +70,7 @@ class Token extends Model
             app('twilio')->messages->create($this->user->getPhoneNumber(),
                 ['from' => env('TWILIO_NUMBER'), 'body' => "Your verification code is {$this->code}"]);
         } catch (\Exception $ex) {
+//            throw $ex;
             return false; //enable to send SMS
         }
 

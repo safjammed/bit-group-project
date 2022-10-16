@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Title -->
-    <title>BIT GROUP PROJECT</title>
+    <title> {{config('app.name')}}</title>
 
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">

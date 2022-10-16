@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3cea32cc-b4a0-42b4-b591-a1320bf5b002" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/undp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/undp.iml" afterDir="false" />
+    <list default="true" id="3cea32cc-b4a0-42b4-b591-a1320bf5b002" name="Default Changelist" comment="Updated database structure">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_02_23_200336_create_tokens_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_02_23_200336_create_tokens_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_04_28_144255_create_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_04_28_144255_create_images_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_04_28_144501_create_administrator_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_04_28_144501_create_administrator_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_04_28_144549_create_student_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_04_28_144254_create_student_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_04_28_144843_create_terms_agreed_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_04_28_144843_create_terms_agreed_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_04_28_144919_create_notified_coordinator_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_04_28_144919_create_notified_coordinator_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Token.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Token.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/data/document.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/data/document.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/mail/defaultMail.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/defaultMail.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/parts/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/parts/footer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/parts/head.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/parts/head.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/parts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/parts/sidebar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,18 +341,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/safjammed/PhpstormProjects/magazine",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/safjammed/PhpstormProjects/magazine&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\bit-group-project\resources\views\mail" />
@@ -398,7 +400,9 @@
       <workItem from="1556210005809" duration="17809000" />
       <workItem from="1556462214692" duration="19025000" />
       <workItem from="1556519130200" duration="2792000" />
-      <workItem from="1665679464606" duration="2494000" />
+      <workItem from="1665679464606" duration="3110000" />
+      <workItem from="1665807688606" duration="181000" />
+      <workItem from="1665808676570" duration="3309000" />
     </task>
     <task id="LOCAL-00001" summary="comment, document viewer, status management, new permissions, 3 new pages, updated database">
       <created>1552693105600</created>
@@ -428,7 +432,14 @@
       <option name="project" value="LOCAL" />
       <updated>1553030713214</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Updated database structure">
+      <created>1665700071371</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1665700071371</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -480,7 +491,8 @@
     <MESSAGE value="sidebar changes" />
     <MESSAGE value="Faculty Viewer, sidebar, message fix, submissions fix" />
     <MESSAGE value="comments, mail, selected submission download, homepage reposrts, sidebar enhancements" />
-    <option name="LAST_COMMIT_MESSAGE" value="comments, mail, selected submission download, homepage reposrts, sidebar enhancements" />
+    <MESSAGE value="Updated database structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated database structure" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/resources/views/auth/login.blade.php">
