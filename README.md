@@ -1,10 +1,10 @@
 # University Magazine Management Subsystem
 ### Features
-- Role and permission based user management
+- Role and permission-based user management
 - 2 Step verification
 - Style Customization
 - Online Document Viewer
-- Top notch security, virtually unhackable
+- Top-notch security, virtually unhackable
 - Performance boost using cache
 
 
@@ -16,7 +16,7 @@
 
 
 ### How to get started?
-Install dependencies. set up the `.env` file according to the `.env.example` file Open Terminal and type
+Install dependencies. set up the `.env` file according to the `.env.example` file Open the Terminal and type
 ```
 git clone https://github.com/safjammed/bit-group-project
 
@@ -24,7 +24,7 @@ cd bit-group-project
 
 composer update
 
-php artisan key:generate
+php artisan key: generate
 
 php artisan migrate --seed
 
@@ -45,9 +45,9 @@ Arifujjaman Firoj [http://github.com/ITArif]
  
  
  
-##### **Database designer**
+##### **Database Designer**
 
-Meherab Dipro [http://github.com/2mdipro7]
+Mehrab Mashrafi [http://github.com/2mdipro7]
 
   
   
